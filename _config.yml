@@ -1,0 +1,29 @@
+source: ./resources/views
+layouts_dir: ./_layouts
+includes_dir: ./_includes
+plugins_dir: ./_plugins
+data_dir: ./_data
+keep_files: [ assets ]
+
+title: Front-End Boilerplate
+baseurl: ""
+url: ""
+
+# Navigation links
+navigation:
+- text: Home
+  url: /landing.html
+- text: Another
+  url: /another.html
+
+# Build settings
+markdown: kramdown
+theme: minima
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - package.json
+  - yarn.lock
+  - gulpfile.js
+  - resources

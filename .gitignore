@@ -1,0 +1,9 @@
+yarn.lock
+.sass-cache
+node_modules
+_site
+.jekyll-metadata
+Thumbs.db
+.DS_Store
+.idea
+report.html
