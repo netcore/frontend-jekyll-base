@@ -34,7 +34,7 @@ const paths = {
             'resources/assets/sass/**/*.{sass,scss}'
         ],
         img: [
-            'resources/assets/**/*.{jpg,jpeg,png,gif}'
+            'resources/assets/img/*.{jpg,jpeg,png,gif}'
         ],
         svg: [
             'resources/assets/svg/*.svg',
@@ -190,8 +190,8 @@ gulp.task('build:js', () => {
         })
     )
 
-    // minify js if the environment is set to "production"
     if (env === 'production') {
+        // minify js
         settings.webpack.plugins.push(
             new webpackUglify({
                 parallel: 2,
@@ -206,6 +206,7 @@ gulp.task('build:js', () => {
             })
         )
     } else if (env === 'debug') {
+        // visually show library usage
         settings.webpack.plugins.push(
             new BundleAnalyzerPlugin()
         )

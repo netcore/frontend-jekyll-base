@@ -1,5 +1,3 @@
-import 'vue'
-
 // import bootstrap components
 import 'bootstrap/js/dist/alert'
 import 'bootstrap/js/dist/button'
