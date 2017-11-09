@@ -1,4 +1,8 @@
-const baseHref = window.location.href
+try {
+    let baseHref = $('base').prop('href')
+} catch (error) {
+    let baseHref = window.location.origin
+}
 global.baseUrl = baseHref.substr(-1) === '/' ? baseHref.slice(0, baseHref.length - 1) : baseHref
 
 // The no-js class is provided in order to allow you to more easily and explicitly add custom styles based

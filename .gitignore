@@ -1,9 +1,10 @@
-yarn.lock
-.sass-cache
-node_modules
-_site
-.jekyll-metadata
-Thumbs.db
 .DS_Store
 .idea
+.jekyll-metadata
+.sass-cache
+_site
+Gemfile.lock
+node_modules
 report.html
+Thumbs.db
+yarn.lock

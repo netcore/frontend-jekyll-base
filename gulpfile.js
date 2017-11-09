@@ -1,10 +1,13 @@
 // plugins
 const gulp                  = require('gulp')
 const sass                  = require('gulp-sass')
+const concat                = require('gulp-concat')
 const notify                = require('gulp-notify')
 const cleanCSS              = require('gulp-clean-css')
 const autoprefixer          = require('gulp-autoprefixer')
 const sourcemaps            = require('gulp-sourcemaps')
+const header                = require('gulp-header')
+const footer                = require('gulp-footer')
 const gulpif                = require('gulp-if')
 const svgmin                = require('gulp-svgmin')
 const imagemin              = require('gulp-imagemin')
@@ -36,12 +39,16 @@ const paths = {
         img: [
             'resources/assets/img/*.{jpg,jpeg,png,gif}'
         ],
-        svg: [
-            'resources/assets/svg/*.svg',
-            'resources/assets/svg/**/*.svg',
-            '!resources/assets/svg/!*.svg',
-            '!resources/assets/svg/**/!*.svg',
-        ],
+        svg: {
+            separate: [
+                'resources/assets/svg/*.svg',
+                '!resources/assets/svg/!*.svg'
+            ],
+            sprites: [
+                'resources/assets/svg/**/*.svg',
+                '!resources/assets/svg/**/!*.svg'
+            ]
+        },
         favicon: 'resources/assets/favicon/*',
         jekyll: [
             'resources/views/**/*.html',
@@ -151,11 +158,25 @@ gulp.task('build:img', () => {
         .pipe(gulpif(env === 'development', bs.stream()))
 })
 
-// task: build:svg
-gulp.task('build:svg', () => {
+// task: build:svg-separate
+gulp.task('build:svg-separate', () => {
     bs.notify('Running: build:svg')
-    return gulp.src(paths.src.svg)
-        .pipe(plumber())
+    return gulp.src(paths.src.svg.separate)
+        .pipe(gulpif(env === 'production', svgmin()))
+        .pipe(gulp.dest(paths.dest.svg))
+        .pipe(gulpif(env === 'development', bs.stream()))
+})
+
+// task: build:svg-sprites
+gulp.task('build:svg-sprites', () => {
+    bs.notify('Running: build:svg-sprites')
+    return gulp.src(paths.src.svg.sprites)
+        .pipe(concat('sprites.svg').on('error', notify.onError({
+            title: 'Error: SVG Concat',
+            message: '<%= error.message %>'
+        })))
+        .pipe(header('<svg xmlns="http://www.w3.org/2000/svg"><defs>'))
+        .pipe(footer('</defs></svg>'))
         .pipe(gulpif(env === 'production', svgmin()))
         .pipe(gulp.dest(paths.dest.svg))
         .pipe(gulpif(env === 'development', bs.stream()))
@@ -245,7 +266,7 @@ gulp.task('clean:build', () => {
 
 // task: default
 gulp.task('default', ['clean:build'], () => {
-    return gulp.start('compile:sass', 'build:img', 'build:svg', 'build:favicon', 'build:fonts', 'build:js')
+    return gulp.start('compile:sass', 'build:img', 'build:svg-sprites', 'build:svg-separate', 'build:favicon', 'build:fonts', 'build:js')
 })
 
 // task: production
@@ -267,7 +288,8 @@ gulp.task('dev', ['watch'])
 gulp.task('watch', ['default', 'build:jekyll'], () => {
     gulp.watch(paths.src.sass, ['compile:sass'])
     gulp.watch(paths.src.img, ['build:img'])
-    gulp.watch(paths.src.svg, ['build:svg'])
+    gulp.watch(paths.src.svg.sprites, ['build:svg-sprites'])
+    gulp.watch(paths.src.svg.separate, ['build:svg-separate'])
     gulp.watch(paths.src.fonts, ['build:fonts'])
     gulp.watch(paths.src.favicon, ['build:favicon'])
     gulp.watch(paths.src.jekyll, ['build:jekyll'])
