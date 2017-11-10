@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+	<title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
 
-    <!-- favicons -->
-    <link rel="icon" href="{{ 'assets/favicon/favicon.png' | relative_url }}">
-    <!-- END: favicons -->
+	<!-- favicons -->
+	<link rel="apple-touch-icon" sizes="76x76" href="{{ 'assets/favicon/apple-touch-icon.png' | relative_url }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ 'assets/favicon/favicon-32x32.png' | relative_url }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ 'assets/favicon/favicon-16x16.png' | relative_url }}">
+	<link rel="manifest" href="{{ 'assets/favicon/manifest.json' | relative_url }}">
+	<link rel="mask-icon" href="{{ 'assets/favicon/safari-pinned-tab.svg' | relative_url }}" color="#ff985d">
+	<link rel="shortcut icon" href="{{ 'assets/favicon/favicon.ico' | relative_url }}">
+	<meta name="msapplication-config" content="{{ 'assets/favicon/browserconfig.xml' | relative_url }}">
+	<meta name="theme-color" content="#ffffff">
+	<!-- END: favicons -->
 
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="{{ 'assets/css/vendor.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
-    <link rel="stylesheet" href="{{ 'assets/css/app.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
-    <!-- END: stylesheets -->
+	<!-- stylesheets -->
+	<link rel="stylesheet" href="{{ 'assets/css/vendor.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
+	<link rel="stylesheet" href="{{ 'assets/css/app.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
+	<!-- END: stylesheets -->
 </head>
 <body class="pt-0">
 
-    <!--[if lte IE 9]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-    <![endif]-->
+	<!--[if lte IE 9]>
+	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+	<![endif]-->
 
-    {{ content }}
+	{{ content }}
 
 </body>
 </html>

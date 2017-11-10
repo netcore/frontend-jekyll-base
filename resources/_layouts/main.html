@@ -1,61 +1,68 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+	<title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
 
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
 
-    <!-- Social: Facebook / Open Graph -->
-    <meta property="og:title" content="">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <meta property="og:description" content="">
-    <meta property="og:site_name" content="">
-    <!-- Social: Twitter -->
-    <meta name="twitter:card" content="">
-    <meta name="twitter:site" content="">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image:src" content="">
-    <!-- Social: Google+ / Schema.org  -->
-    <meta itemprop="name" content=""/>
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="">
+	<!-- Social: Facebook / Open Graph -->
+	<meta property="og:title" content="">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:image" content="">
+	<meta property="og:description" content="">
+	<meta property="og:site_name" content="">
+	<!-- Social: Twitter -->
+	<meta name="twitter:card" content="">
+	<meta name="twitter:site" content="">
+	<meta name="twitter:title" content="">
+	<meta name="twitter:description" content="">
+	<meta name="twitter:image:src" content="">
+	<!-- Social: Google+ / Schema.org  -->
+	<meta itemprop="name" content="">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
 
-    <!-- favicons -->
-    <link rel="icon" href="{{ 'assets/favicon/favicon.png' | relative_url }}">
-    <!-- END: favicons -->
+	<!-- favicons -->
+	<link rel="apple-touch-icon" sizes="76x76" href="{{ 'assets/favicon/apple-touch-icon.png' | relative_url }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ 'assets/favicon/favicon-32x32.png' | relative_url }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ 'assets/favicon/favicon-16x16.png' | relative_url }}">
+	<link rel="manifest" href="{{ 'assets/favicon/manifest.json' | relative_url }}">
+	<link rel="mask-icon" href="{{ 'assets/favicon/safari-pinned-tab.svg' | relative_url }}" color="#ff985d">
+	<link rel="shortcut icon" href="{{ 'assets/favicon/favicon.ico' | relative_url }}">
+	<meta name="msapplication-config" content="{{ 'assets/favicon/browserconfig.xml' | relative_url }}">
+	<meta name="theme-color" content="#ffffff">
+	<!-- END: favicons -->
 
-    <!-- stylesheets -->
-    <link rel="stylesheet" href="{{ 'assets/css/vendor.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
-    <link rel="stylesheet" href="{{ 'assets/css/app.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
-    <!-- END: stylesheets -->
+	<!-- stylesheets -->
+	<link rel="stylesheet" href="{{ 'assets/css/vendor.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
+	<link rel="stylesheet" href="{{ 'assets/css/app.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
+	<!-- END: stylesheets -->
 </head>
 <body>
 
-    <!--[if lte IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-    <![endif]-->
+	<!--[if lte IE 9]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+	<![endif]-->
 
-    {% include header.html %}
+	{% include header.html %}
 
-    <main role="main">
-        {{ content }}
-    </main>
+	<main role="main">
+		{{ content }}
+	</main>
 
-    {% include footer.html %}
+	{% include footer.html %}
 
-    <!-- scripts -->
-    <script src="{{ 'assets/js/common.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
-    <script src="{{ 'assets/js/vendor.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
-    <script src="{{ 'assets/js/app.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
-    <!-- END: scripts -->
+	<!-- scripts -->
+	<script src="{{ 'assets/js/common.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
+	<script src="{{ 'assets/js/vendor.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
+	<script src="{{ 'assets/js/app.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
+	<!-- END: scripts -->
 
 </body>
 </html>

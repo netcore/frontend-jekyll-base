@@ -7,8 +7,12 @@
   "license": "MIT",
   "private": true,
   "browserslist": [
+    ">1%",
     "last 2 versions",
-    ">1%"
+    "Firefox >= 48",
+    "Safari >= 9.1",
+    "Chrome >= 54",
+    "iOS >= 9.3"
   ],
   "devDependencies": {
     "babel-core": "^6.26.0",

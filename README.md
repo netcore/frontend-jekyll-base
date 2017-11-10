@@ -27,6 +27,12 @@ Vendor libraries included by default: **bootstrap 4.0.0-beta.2**, **jquery**
 _this task may take longer to finish because of image processing tasks_
 
 ## Assets
+### Editor
+* Tab size: 4
+* Indent using spaces: no (false)
+* Language-specific changes:
+  * JavaScript language version: ECMAScript 6 ([WebStorm example](https://i.imgur.com/rB1DYqi.png))
+
 ### SVG
 * Usage
   * `{% include_relative _assets/svg/<icon name>.svg %}`
@@ -39,6 +45,7 @@ _this task may take longer to finish because of image processing tasks_
 * File structure
   * all component-like partials must be inside the `components/` directory (e.g. buttons, forms, header, footer etc.)
   * all sub-directory files must have a `_` prefix added to them (e.g. `buttons.scss` -> `_buttons.scss`)
+  * page-specific edits must be inside the `pages/` directory
 
 ### JS
 * Technologies
@@ -47,6 +54,13 @@ _this task may take longer to finish because of image processing tasks_
   * files must be logically split between 3 (or more) directories - `components/`, `classes/` and `directives/`
   * if the name of file (theoretically) consists of two words, each of them must be capitalized (e.g. date picker -> DatePicker) - same applies to single-word files
 
+### Fonts
+* because some of the clients might not have an access to Google (thus all its services, including CDN), all fonts must be downloaded
+* if the font is downloaded from Google Fonts, its stylesheet can be copied over (with urls changed to match the path to locally saved fonts)
+
+### Favicons
+* use [Real Favicon Generator](https://realfavicongenerator.net/) to generate favicons for web use
+
 ## Having issues?
 * (might not work) If you are getting errors while trying to setup a project or run "gulp" tasks:
   * install bundler - `gem install bundler`
@@ -54,3 +68,4 @@ _this task may take longer to finish because of image processing tasks_
 
 ## Thanks
 * [HTML5Boilerplate](https://html5boilerplate.com/)
+* [Real Favicon Generator](https://realfavicongenerator.net/)
