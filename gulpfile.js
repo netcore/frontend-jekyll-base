@@ -86,7 +86,7 @@ const settings = {
 		}),
 		imageminPngquant({
 			speed: 1,
-			quality: 98 //lossy settings
+			quality: 98 // lossy settings
 		})
 	],
 	webpack: require('./webpack.config.js'),
@@ -240,6 +240,9 @@ gulp.task('build:js', () => {
 				}
 			})
 		)
+
+		// change vue alias to the production version
+		settings.webpack.resolve.alias['vue$'] = 'vue/dist/vue.min'
 	} else if (env === 'debug') {
 		// visually show library usage
 		settings.webpack.plugins.push(

@@ -21,6 +21,8 @@ const config = {
     },
     resolve: {
         alias: {
+            'vue$':         'vue/dist/vue',
+
             'components':   path.resolve(__dirname, 'resources/assets/js/components'),
             'classes':      path.resolve(__dirname, 'resources/assets/js/classes'),
             'directives':   path.resolve(__dirname, 'resources/assets/js/directives')

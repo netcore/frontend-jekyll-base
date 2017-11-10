@@ -9,5 +9,7 @@ global.baseUrl = baseHref.substr(-1) === '/' ? baseHref.slice(0, baseHref.length
 // on whether JavaScript is disabled (.no-js) or enabled (.js).
 $('html.no-js').removeClass('no-js').addClass('js')
 
+const app = new Vue()
+
 // ...
 console.log('it works!')
