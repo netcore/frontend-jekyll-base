@@ -26,12 +26,19 @@ Vendor libraries included by default: **bootstrap 4.0.0-beta.2**, **jquery**
 
 _this task may take longer to finish because of image processing tasks_
 
-## Assets
-### Editor
+## Editor
 * Tab size: 4
 * Indent using spaces: no (false)
 * Language-specific changes:
   * JavaScript language version: ECMAScript 6 ([WebStorm example](https://i.imgur.com/rB1DYqi.png))
+
+## Assets
+### Installing new packages
+1. `yarn add <package name>` in your terminal/cmd
+2. `import '<package name>'` in **vendor.js** and **app.js** or any component file
+
+**Comment:** Importing in both places is important because we do not want to have our **app.bundle.js** output to contain any of the vendor libraries.
+By doing it this way, webpack notices the sames libraries and puts them in a file named **common.bundle.js**.
 
 ### SVG
 * Usage

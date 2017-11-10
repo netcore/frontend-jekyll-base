@@ -4,16 +4,20 @@ const sass                  = require('gulp-sass')
 const cleanCSS              = require('gulp-clean-css')
 const autoprefixer          = require('gulp-autoprefixer')
 const sourcemaps            = require('gulp-sourcemaps')
+const header                = require('gulp-header')
+const footer                = require('gulp-footer')
 const gulpif                = require('gulp-if')
 const svgmin                = require('gulp-svgmin')
 const imagemin              = require('gulp-imagemin')
 const imageminPngquant      = require('imagemin-pngquant')
 const rename                = require('gulp-rename')
 const plumber               = require('gulp-plumber')
+const concatFilenames 		= require('gulp-concat-filenames')
 const chalk                 = require('chalk')
 const bs                    = require('browser-sync').create()
 const cp                    = require('child_process')
 const del                   = require('del')
+const path                  = require('path')
 const webpack               = require('webpack')
 const webpackStream         = require('webpack-stream')
 const webpackUglify         = require('uglifyjs-webpack-plugin')
@@ -97,6 +101,11 @@ const settings = {
 				return message
 			}
 		}
+	},
+	concatFilenames: {
+		template (filename, test) {
+			return `	"${filename.substring(filename.lastIndexOf('/') + 1)}",`
+		}
 	}
 }
 
@@ -167,6 +176,17 @@ gulp.task('build:img', () => {
 // task: build:svg
 gulp.task('build:svg', () => {
 	bs.notify('Running: build:svg')
+
+	// generate JSON file with SVG icon file names
+	gulp.src(paths.src.svg)
+		.pipe(plumber(settings.plumber('build:svg')))
+		.pipe(concatFilenames('icons.json', settings.concatFilenames))
+		.pipe(header('[\n'))
+		.pipe(footer(']'))
+		.pipe(gulp.dest(paths.dest.json))
+		.pipe(plumber.stop())
+
+	// relocate and optimize svg
 	return gulp.src(paths.src.svg)
 		.pipe(plumber(settings.plumber('build:svg')))
 		.pipe(gulpif(env === 'production', svgmin()))
@@ -262,6 +282,7 @@ gulp.task('clean:build', () => {
 		paths.dest.svg,
 		paths.dest.favicon,
 		paths.dest.fonts,
+		paths.dest.json,
 		'_site/*.html'
 	], { force: true })
 })
