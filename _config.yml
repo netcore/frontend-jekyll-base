@@ -1,4 +1,4 @@
-source: ./resources/views
+source: ./resources
 layouts_dir: ./_layouts
 includes_dir: ./_includes
 plugins_dir: ./_plugins

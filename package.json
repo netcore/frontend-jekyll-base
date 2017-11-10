@@ -14,6 +14,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "browser-sync": "^2.18.13",
+    "chalk": "^2.3.0",
     "css-loader": "^0.28.7",
     "del": "^3.0.0",
     "exports-loader": "^0.6.4",
@@ -22,12 +23,12 @@
     "gulp-clean-css": "^3.9.0",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^3.4.0",
-    "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-svgmin": "^1.2.4",
+    "imagemin-pngquant": "^5.0.1",
     "path": "^0.12.7",
     "uglifyjs-webpack-plugin": "^1.0.1",
     "vinyl-named": "^1.1.0",
@@ -40,7 +41,7 @@
   "dependencies": {
     "bootstrap": "4.0.0-beta.2",
     "jquery": "^3.2.1",
-    "popper.js": "1.12.3",
+    "popper.js": "^1.12.6",
     "vue": "^2.5.3"
   }
 }
