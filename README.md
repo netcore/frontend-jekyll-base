@@ -17,6 +17,7 @@ Vendor libraries included by default: **bootstrap 4.0.0-beta.2**, **jquery**
 1. `git clone https://github.com/netcore/frontend-base.git <project name>`
 2. `cd <project name>`
 3. `yarn` or `yarn install`
+4. (optional) delete all `.placeholder` files
 
 ### Starting the development
 `gulp dev` or `gulp watch` to start a local server and watch for changes
