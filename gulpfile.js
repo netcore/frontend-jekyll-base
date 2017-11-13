@@ -130,7 +130,10 @@ gulp.task('build:jekyll', (callback) => {
 	let error = false
 
 	return cp.spawn(jekyll, ['build', '--incremental', '--quiet'], { stdio: 'inherit' })
-		.on('exit', () => {
+		.on('exit', (code) => {
+			if (code === 0)
+				return
+
 			bs.notify('ERROR: build:jekyll', 10000)
 			error = true
 		})
