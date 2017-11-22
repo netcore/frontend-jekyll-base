@@ -42,3 +42,8 @@ _this task may take longer to finish because of image processing tasks_
 ## Thanks
 * [HTML5Boilerplate](https://html5boilerplate.com/)
 * [Real Favicon Generator](https://realfavicongenerator.net/)
+
+## To-Do
+* JS
+  * Create a "localStorage" ES6 class and bundle it by default
+  * When "WebFontLoader" fails to load a font from Google's CDN more than 3 times, make it so it automatically loads the locally saved version of that font (based on the before mentioned "localStorage" class)
