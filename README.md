@@ -5,6 +5,10 @@ Based on: **yarn**, **webpack** and **gulp**.
 
 Vendor libraries included by default: **bootstrap 4.0.0-beta.2**, **jquery**
 
+| Engine        | Version       |
+| ------------- |:-------------:|
+| node          | ≥6            |
+
 ## Setup
 ### Environmental setup
 1. Install [NodeJS](https://nodejs.org/en/)
@@ -26,6 +30,43 @@ Vendor libraries included by default: **bootstrap 4.0.0-beta.2**, **jquery**
 `gulp prod` to get project templates and assets ready for production
 
 _this task may take longer to finish because of image processing tasks_
+
+## Project Structure
+```
+ ├── resources/
+ │   ├── _assets/
+ │       ├── favicon/
+ │       ├── fonts/                   # Fallback fonts for situations where the end-user cannot access Google CDN
+ │       ├── img/                     # Source images that will get compressed on production
+ │       ├── js/
+ │           ├── classes/             # ES6 Classes
+ │           ├── components/          # Any site component (e.g. Steps, Tabs, FileUpload etc.)
+ │           ├── directives/          # Vue directives
+ |           ├── app.js               # Our application's code
+ |           ├── vendor.js            # Vendor libraries
+ │       ├── json/
+ │       ├── sass/
+ │           ├── base/
+ │               ├── functions/       # SCSS functions
+ │               ├── mixins/          # SCSS mixins
+ │               ├── _functions.scss  # Imports of functions from the "functions" directory
+ │               ├── _mixins.scss     # Imports of mixins from the "mixins" directory
+ │               ├── _general.scss    # General styling (e.g. body)
+ │               ├── _variables.scss  # All project variables
+ │           ├── components/          # Project components (e.g. buttons, header, etc.)
+ │           ├── vendor/              # Vendor library imports
+ │               ├── _bootstrap.scss  # Vendor library imports
+ │           ├── app.scss             # Imports of all vendors, components etc.
+ │       ├── svg/
+ │   ├── _includes/                   # Jekyll template partials
+ │   ├── _layouts/                    # Jekyll layouts
+ │   ├── _data/                       # JSON for Jekyll use (different from the one found inside the "_assets" folder)
+ ├── _config.yml                      # Jekyll configuration
+ ├── package.json                     # Installed packages
+ └── gulpfile.js
+ └── webpack.config.js                # JavaScript processing
+ └── yarn.lock                        # Required to get consistent installs across machines
+```
 
 ## Editor
 * Tab size: 4
