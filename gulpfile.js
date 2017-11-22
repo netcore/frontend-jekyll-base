@@ -153,16 +153,16 @@ gulp.task('build:jekyll', (callback) => {
 gulp.task('compile:sass', () => {
 	bs.notify('Running: compile:sass')
 	return gulp.src(paths.src.sass)
-		.pipe(plumber(settings.plumber('compile:sass')))
 		.pipe(gulpif(env === 'development', sourcemaps.init()))
+		.pipe(plumber(settings.plumber('compile:sass')))
 		.pipe(sass())
+		.pipe(plumber.stop())
 		.pipe(autoprefixer())
 		.pipe(gulpif(env === 'production', cleanCSS()))
 		.pipe(rename({ suffix: '.bundle' }))
 		.pipe(gulpif(env === 'development', sourcemaps.write('.')))
 		.pipe(gulp.dest(paths.dest.css))
 		.pipe(gulpif(env === 'development', bs.stream()))
-		.pipe(plumber.stop())
 })
 
 // task: build:img
