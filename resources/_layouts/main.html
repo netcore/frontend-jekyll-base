@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 	<title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
@@ -40,15 +40,40 @@
 	<!-- END: favicons -->
 
 	<!-- stylesheets -->
-	<link rel="stylesheet" href="{{ 'assets/css/vendor.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
 	<link rel="stylesheet" href="{{ 'assets/css/app.bundle.css' | relative_url }}?_={{ site.time | date: '%s' }}">
 	<!-- END: stylesheets -->
+
+	<!-- outdated browser message -->
+	<script>function $buo_f(){var o=document.createElement("script");o.src="//browser-update.org/update.min.js",document.body.appendChild(o)}var $buoop=window.browsersupport?window.browsersupport:{notify:{i:10,f:47,o:47,s:9,c:54},url:"http://outdatedbrowser.com/",reminder:0,insecure:!0,unsupported:!1,api:5};;try{document.addEventListener("DOMContentLoaded",$buo_f,!1)}catch(o){window.attachEvent("onload",$buo_f)}</script>
+	<!-- END: outdated browser message -->
 </head>
 <body>
 
-	<!--[if lte IE 9]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-	<![endif]-->
+	<!-- a message for users with javascript disabled -->
+	<noscript>
+		<input type="checkbox" id="noscript-modal" hidden>
+		<div class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="noscriptModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">You don't have JavaScript enabled</h5>
+						<label for="noscript-modal" class="close" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</label>
+					</div>
+					<div class="modal-body">
+						<p>Our website (just like many other modern web applications) are using JavaScript to enhance <b>your</b> experience and make the interaction feel more dynamic.</p>
+					</div>
+					<div class="modal-footer">
+						<a href="https://www.enable-javascript.com/" target="_blank" class="btn btn-primary">Enable JavaScript</a>
+						<label for="noscript-modal" class="btn btn-secondary mb-0">Close this dialog</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-backdrop fade show"></div>
+	</noscript>
+	<!-- END: a message for users with javascript disabled -->
 
 	{% include header.html %}
 

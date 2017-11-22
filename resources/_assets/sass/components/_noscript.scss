@@ -1,0 +1,14 @@
+noscript {
+	.modal {
+		display: block;
+	}
+}
+
+input#noscript-modal {
+	&:checked {
+		~ .modal,
+		~ .modal-backdrop {
+			display: none !important;
+		}
+	}
+}
