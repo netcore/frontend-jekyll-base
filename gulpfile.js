@@ -141,6 +141,10 @@ gulp.task('build:jekyll', (callback) => {
 			// delete Jekyll's compiled css file
 			del(['./_site/assets/main.css'], { force: true })
 
+			// initiate browser sync
+			if (!browserSync && env === 'development')
+				gulp.start('browser-sync')
+
 			// reload browser if browser-sync is running
 			if (browserSync && !error)
 				bs.reload()
@@ -314,7 +318,7 @@ gulp.task('debug', () => {
 gulp.task('dev', ['watch'])
 
 // task: watch
-gulp.task('watch', ['default', 'browser-sync'], () => {
+gulp.task('watch', ['default'], () => {
 	gulp.watch(paths.src.sass, ['compile:sass'])
 	gulp.watch(paths.src.img, ['build:img'])
 	gulp.watch(paths.src.svg, ['build:svg'])
