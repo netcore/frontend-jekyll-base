@@ -1,6 +1,6 @@
 {
   "name": "frontend-boilerplate",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Netcore Front-End Boilerplate to quickly start off a new project",
   "main": "index.js",
   "author": "Vladislavs Žizņevskis <vladislavs.ziznevskis@netcore.lv>",
