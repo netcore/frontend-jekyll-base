@@ -1,10 +1,9 @@
 .DS_Store
 .idea
 .jekyll-metadata
-.sass-cache
-_site
-Gemfile.lock
-node_modules
+.sass-cache/
+_site/
+node_modules/
 report.html
 Thumbs.db
-yarn.lock
+npm-debug.log
