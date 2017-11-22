@@ -1,30 +1,49 @@
 {
   "name": "frontend-boilerplate",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "description": "Netcore Front-End Boilerplate to quickly start off a new project",
   "main": "index.js",
   "author": "Vladislavs Žizņevskis <vladislavs.ziznevskis@netcore.lv>",
   "license": "MIT",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netcore/frontend-base.git"
+  },
+  "scripts": {
+    "version": "auto-changelog -p && git add CHANGELOG.md"
+  },
   "browserslist": [
     ">1%",
-    "last 2 versions",
+    "last 1 versions",
     "Firefox >= 48",
     "Safari >= 9.1",
     "Chrome >= 54",
-    "iOS >= 9.3"
+    "iOS >= 9.3",
+    "IE >= 11"
   ],
+  "auto-changelog": {
+    "output": "CHANGELOG.md",
+    "template": "keepachangelog",
+    "unreleased": true,
+    "commitLimit": false
+  },
   "devDependencies": {
+    "auto-changelog": "^1.1.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
     "browser-sync": "^2.18.13",
     "chalk": "^2.3.0",
     "css-loader": "^0.28.7",
     "del": "^3.0.0",
+    "eslint": "^4.11.0",
+    "eslint-loader": "^1.9.0",
     "exports-loader": "^0.6.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-clean-css": "^3.9.0",
+    "gulp-concat-filenames": "^1.2.0",
     "gulp-footer": "^1.0.5",
     "gulp-header": "^1.8.9",
     "gulp-if": "^2.0.2",
@@ -46,7 +65,6 @@
   },
   "dependencies": {
     "bootstrap": "4.0.0-beta.2",
-    "gulp-concat-filenames": "^1.2.0",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.6",
     "vue": "^2.5.3"
