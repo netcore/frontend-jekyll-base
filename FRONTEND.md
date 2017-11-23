@@ -72,8 +72,22 @@ By doing it this way, webpack notices the sames libraries and puts them in a fil
   * if the name of file (theoretically) consists of two words, each of them must be capitalized (e.g. date picker -> DatePicker) - same applies to single-word files
 
 ### Fonts
-* because some of the clients might not have an access to Google (thus all its services, including CDN), all fonts must be downloaded
-* if the font is downloaded from Google Fonts, its stylesheet can be copied over (with urls changed to match the path to locally saved fonts)
+1. download the fonts from [fonts.google.com](https://fonts.google.com/)
+2. go to [transfonter.org](https://transfonter.org/)
+3. upload all fonts
+4. put in the following settings:
+  * Family support: **ON**
+  * Add local() rule: **ON** _(doesn't really matter)_
+  * Autohint font: **OFF**
+  * Base64 encode: **OFF**
+  * Formats: **TTF**, **SVG**, **WOFF**, **WOFF2**
+  * Subsets: **set the same as you chose before downloading the font from Google Fonts** ([example](https://i.imgur.com/2lIfhif.png))
+5. convert and download the fonts
+6. place the downloaded fonts inside the `resources/_assets/fonts/<font family name in lowercase>/`
+7. if the font files have a prefix "subset-", please remove it
+8. open and update `resources/_assets/sass/fonts.scss` and `resources/_assets/js/components/WebFont.js` to match your font files
+
+**Comment:** this is done because some of our clients may have their access blocked to Google's CDN, thus not allowing them to use the custom font. We still provide fonts through Google's CDN for those who can access it.
 
 ### Favicons
 * use [Real Favicon Generator](https://realfavicongenerator.net/) to generate favicons for web use
