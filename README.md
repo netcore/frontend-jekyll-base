@@ -25,6 +25,9 @@ Vendor libraries included by default: **bootstrap 4.0.0-beta.2**, **jquery**
 2. `cd <project name>`
 3. `yarn` or `yarn install`
 4. (optional) delete all `.placeholder` files
+5. changing line break option (inside `.eslintrc.json`):
+  * for Windows: rules.linebreak-style must be "windows" _(default)_
+  * for Linux/macOS: rules.linebreak-style must be "unix"
 
 ### Starting the development
 `gulp dev` or `gulp watch` to start a local server and watch for changes
@@ -42,8 +45,7 @@ _this task may take longer to finish because of image processing tasks_
 ## Thanks
 * [HTML5Boilerplate](https://html5boilerplate.com/)
 * [Real Favicon Generator](https://realfavicongenerator.net/)
+* [SASS @font-face mixin](https://gist.github.com/jonathantneal/d0460e5c2d5d7f9bc5e6)
 
 ## To-Do
-* JS
-  * Create a "localStorage" ES6 class and bundle it by default
-  * When "WebFontLoader" fails to load a font from Google's CDN more than 3 times, make it so it automatically loads the locally saved version of that font (based on the before mentioned "localStorage" class)
+_empty_
