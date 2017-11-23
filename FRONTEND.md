@@ -72,6 +72,7 @@ By doing it this way, webpack notices the sames libraries and puts them in a fil
   * if the name of file (theoretically) consists of two words, each of them must be capitalized (e.g. date picker -> DatePicker) - same applies to single-word files
 
 ### Fonts
+#### Installation
 1. download the fonts from [fonts.google.com](https://fonts.google.com/)
 2. go to [transfonter.org](https://transfonter.org/)
 3. upload all fonts
@@ -85,9 +86,12 @@ By doing it this way, webpack notices the sames libraries and puts them in a fil
 5. convert and download the fonts
 6. place the downloaded fonts inside the `resources/_assets/fonts/<font family name in lowercase>/`
 7. if the font files have a prefix "subset-", please remove it
-8. open and update `resources/_assets/sass/fonts.scss` and `resources/_assets/js/components/WebFont.js` to match your font files
+8. open and update `resources/_assets/sass/base/_fonts.scss` to match your font files
 
-**Comment:** this is done because some of our clients may have their access blocked to Google's CDN, thus not allowing them to use the custom font. We still provide fonts through Google's CDN for those who can access it.
+**Comment:** this is done because some of our clients may have their access to Google's CDN blocked - thus not allowing them to see the custom font.
+
+#### Usage
+* directories with "\_" prefix are ignored
 
 ### Favicons
 * use [Real Favicon Generator](https://realfavicongenerator.net/) to generate favicons for web use
