@@ -15,6 +15,7 @@ Vendor libraries included by default: **bootstrap 4.0.0-beta.2**, **jquery**
 ## Setup
 ### Environmental setup
 1. Install [NodeJS](https://nodejs.org/en/)
+  * on some systems "npm" needs to be installed separately - [see this](https://docs.npmjs.com/getting-started/installing-node) if you're having trouble getting through next steps
 2. Install [gulp](https://gulpjs.com)
 3. Install [yarn](https://yarnpkg.com/en/docs/install)
 4. Install [ruby](https://www.ruby-lang.org/en/documentation/installation/)
