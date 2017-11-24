@@ -1,0 +1,41 @@
+@mixin font-face($name, $local, $path, $weight: null, $style: null, $unicodes: latin, $exts: woff2 woff ttf svg eot) {
+	$src: null;
+	$unicode-range: null;
+
+	$extmods: (
+		svg: "#" + str-replace($local, " ", "_")
+	);
+
+	$formats: (
+		eot: "embedded-opentype",
+		otf: "opentype",
+		ttf: "truetype"
+	);
+
+	@each $ext in $exts {
+		$extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+		$format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+		$src: append($src, url(quote("../fonts/" + $path + "." + $extmod)) format(quote($format)), comma);
+	}
+
+	@each $unicode in $unicodes {
+		@if $unicode == latin {
+			$unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+		} @else if $unicode == latin-ext {
+			$unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+		} @else if $unicode == cyrillic {
+			$unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+		} @else if $unicode == cyrillic-ext {
+			$unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+		}
+	}
+
+	@font-face {
+		font-family: quote($name);
+		font-style: $style;
+		font-weight: $weight;
+		font-display: swap;
+		src: local(quote($name)), local(quote($local)), $src;
+		unicode-range: $unicode-range;
+	}
+}

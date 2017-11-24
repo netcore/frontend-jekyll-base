@@ -11,17 +11,22 @@ const config = {
                 enforce: 'pre',
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: ['eslint-loader']
+                loader: 'eslint-loader',
+                options: {
+                    cache: true,
+                    emitWarning: true,
+                    emitError: true
+                }
             },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: ['babel-loader']
+                loader: 'babel-loader'
             },
             {
                 test: /\.vue$/,
                 exclude: /node_modules/,
-                use: ['vue-loader']
+                loader: 'vue-loader'
             }
         ]
     },
@@ -37,9 +42,9 @@ const config = {
     devtool: 'source-map',
     plugins: [
         new webpack.ProvidePlugin({
-            $: 'jquery/dist/jquery.slim',
-            jQuery: 'jquery/dist/jquery.slim',
-            'window.jQuery': 'jquery/dist/jquery.slim',
+            $: 'jquery/dist/jquery',
+            jQuery: 'jquery/dist/jquery',
+            'window.jQuery': 'jquery/dist/jquery',
             Vue: 'vue',
             Popper: ['popper.js', 'default'],
 
