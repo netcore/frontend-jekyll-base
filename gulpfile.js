@@ -1,32 +1,33 @@
 // plugins
-const gulp                  = require('gulp')
-const sass                  = require('gulp-sass')
-const cleanCSS              = require('gulp-clean-css')
-const autoprefixer          = require('gulp-autoprefixer')
-const sourcemaps            = require('gulp-sourcemaps')
-const header                = require('gulp-header')
-const footer                = require('gulp-footer')
-const gulpif                = require('gulp-if')
-const svgmin                = require('gulp-svgmin')
-const imagemin              = require('gulp-imagemin')
-const imageminPngquant      = require('imagemin-pngquant')
-const rename                = require('gulp-rename')
-const plumber               = require('gulp-plumber')
+const gulp					= require('gulp')
+const sass					= require('gulp-sass')
+const cleanCSS				= require('gulp-clean-css')
+const autoprefixer			= require('gulp-autoprefixer')
+const sourcemaps			= require('gulp-sourcemaps')
+const header				= require('gulp-header')
+const footer				= require('gulp-footer')
+const gulpif				= require('gulp-if')
+const svgmin				= require('gulp-svgmin')
+const imagemin				= require('gulp-imagemin')
+const imageminPngquant		= require('imagemin-pngquant')
+const rename				= require('gulp-rename')
+const plumber				= require('gulp-plumber')
 const concatFilenames 		= require('gulp-concat-filenames')
-const chalk                 = require('chalk')
-const bs                    = require('browser-sync').create()
-const cp                    = require('child_process')
-const del                   = require('del')
-const path                  = require('path')
-const webpack               = require('webpack')
-const webpackStream         = require('webpack-stream')
-const webpackUglify         = require('uglifyjs-webpack-plugin')
-const named                 = require('vinyl-named')
-const BundleAnalyzerPlugin  = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const chalk					= require('chalk')
+const bs					= require('browser-sync').create()
+const cp					= require('child_process')
+const fs 					= require('fs')
+const del					= require('del')
+const path					= require('path')
+const webpack				= require('webpack')
+const webpackStream			= require('webpack-stream')
+const webpackUglify			= require('uglifyjs-webpack-plugin')
+const named					= require('vinyl-named')
+const BundleAnalyzerPlugin	= require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 // variables
-const jekyll                = process.platform === 'win32' ? 'jekyll.bat' : 'jekyll'
-let env                     = 'development'
+const jekyll				= process.platform === 'win32' ? 'jekyll.bat' : 'jekyll'
+let env						= 'development'
 
 // ----------
 
@@ -44,11 +45,15 @@ const paths = {
 		svg: [
 			'resources/_assets/svg/*.svg',
 			'resources/_assets/svg/**/*.svg',
-			'!resources/_assets/svg/!*.svg',
-			'!resources/_assets/svg/**/!*.svg'
+			'!resources/_assets/svg/_*.svg',
+			'!resources/_assets/svg/**/_*.svg'
 		],
-		favicon: 'resources/_assets/favicon/*.{ico,png,json,svg}',
-		fonts: 'resources/_assets/fonts/*.{ttf,otf,eot,woff,woff2,svg}',
+		favicon: 'resources/_assets/favicon/*.{ico,png,json,svg,xml}',
+		fonts: [
+			'!resources/_assets/fonts/{_**,_**/*}',
+			'!resources/_assets/fonts/**/_*',
+			'resources/_assets/fonts/**/*.{ttf,otf,eot,woff,woff2,svg}'
+		],
 		js: {
 			main: 'resources/_assets/js/*.js',
 			all: [
@@ -94,10 +99,13 @@ const settings = {
 		return {
 			errorHandler (error) {
 				bs.notify(`ERROR: ${task}`, 10000)
+
+				// log error
 				console.log(`${chalk.white.bgRed(`ERROR: ${task}`)} ${chalk.redBright('====================')}`)
 				let message = ''
 				if (error.plugin !== 'webpack-stream')
 					message = console.error(chalk.redBright(error.formatted || error.message))
+
 				return message
 			}
 		}
@@ -106,6 +114,33 @@ const settings = {
 		template (filename, test) {
 			return `	"${filename.substring(filename.lastIndexOf('/') + 1)}",`
 		}
+	},
+	bs: {
+		middleware: [
+			(req, res, next) => {
+				if (req.method !== 'GET') {
+					try {
+						let extension = req.url.slice((req.url.lastIndexOf('.') - 1 >>> 0) + 2)
+						let content = require(path.resolve('.') + '/_site' + req.url)
+						if (typeof content === 'object')
+							content = JSON.stringify(content)
+						let status = parseInt(req.url.substring(req.url.lastIndexOf('/'), req.url.length).split(/\_/g)[1])
+
+						if (extension === 'json')
+							res.writeHead(status, { 'Content-Type': 'application/json' })
+						else
+							res.writeHead(status, { 'Content-Type': 'text/plain' })
+
+						res.write(content)
+					} catch (error) {
+						res.writeHead(404, { 'Content-Type': 'text/plain' })
+					}
+
+					res.end()
+				}
+				next()
+			}
+		]
 	}
 }
 
@@ -119,7 +154,8 @@ gulp.task('browser-sync', () => {
 		server: './_site',
 		ghostMode: {
 			scroll: false
-		}
+		},
+		middleware: settings.bs.middleware
 	})
 })
 
@@ -147,7 +183,7 @@ gulp.task('build:jekyll', (callback) => {
 
 			// reload browser if browser-sync is running
 			if (browserSync && !error)
-				bs.reload()
+				bs.reload('**/*.html')
 
 			callback()
 		})
@@ -157,16 +193,18 @@ gulp.task('build:jekyll', (callback) => {
 gulp.task('compile:sass', () => {
 	bs.notify('Running: compile:sass')
 	return gulp.src(paths.src.sass)
-		.pipe(gulpif(env === 'development', sourcemaps.init()))
 		.pipe(plumber(settings.plumber('compile:sass')))
-		.pipe(sass())
-		.pipe(plumber.stop())
+		.pipe(gulpif(env === 'development', sourcemaps.init()))
+		.pipe(sass().on('error', function () {
+			this.emit('end')
+		}))
 		.pipe(autoprefixer())
 		.pipe(gulpif(env === 'production', cleanCSS()))
 		.pipe(rename({ suffix: '.bundle' }))
 		.pipe(gulpif(env === 'development', sourcemaps.write('.')))
+		.pipe(plumber.stop())
 		.pipe(gulp.dest(paths.dest.css))
-		.pipe(gulpif(env === 'development', bs.stream()))
+		.pipe(gulpif(env === 'development', bs.stream({ match: '**/*.css' })))
 })
 
 // task: build:img
@@ -175,9 +213,9 @@ gulp.task('build:img', () => {
 	return gulp.src(paths.src.img)
 		.pipe(plumber(settings.plumber('build:img')))
 		.pipe(gulpif(env === 'production', imagemin(settings.imagemin)))
-		.pipe(gulp.dest(paths.dest.img))
-		.pipe(gulpif(env === 'development', bs.stream()))
 		.pipe(plumber.stop())
+		.pipe(gulp.dest(paths.dest.img))
+		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
 
 // task: build:svg
@@ -190,16 +228,16 @@ gulp.task('build:svg', () => {
 		.pipe(concatFilenames('icons.json', settings.concatFilenames))
 		.pipe(header('[\n'))
 		.pipe(footer(']'))
-		.pipe(gulp.dest(paths.dest.json))
 		.pipe(plumber.stop())
+		.pipe(gulp.dest(paths.dest.json))
 
 	// relocate and optimize svg
 	return gulp.src(paths.src.svg)
 		.pipe(plumber(settings.plumber('build:svg')))
 		.pipe(gulpif(env === 'production', svgmin()))
-		.pipe(gulp.dest(paths.dest.svg))
-		.pipe(gulpif(env === 'development', bs.stream()))
 		.pipe(plumber.stop())
+		.pipe(gulp.dest(paths.dest.svg))
+		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
 
 // task: build:favicon
@@ -208,9 +246,9 @@ gulp.task('build:favicon', () => {
 	return gulp.src(paths.src.favicon)
 		.pipe(plumber(settings.plumber('build:favicon')))
 		.pipe(gulpif(env === 'production', imagemin(settings.imagemin)))
-		.pipe(gulp.dest(paths.dest.favicon))
-		.pipe(gulpif(env === 'development', bs.stream()))
 		.pipe(plumber.stop())
+		.pipe(gulp.dest(paths.dest.favicon))
+		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
 
 // task: build:fonts
@@ -218,7 +256,7 @@ gulp.task('build:fonts', () => {
 	bs.notify('Running: build:fonts')
 	return gulp.src(paths.src.fonts)
 		.pipe(gulp.dest(paths.dest.fonts))
-		.pipe(gulpif(env === 'development', bs.stream()))
+		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
 
 // task: build:js
@@ -263,10 +301,12 @@ gulp.task('build:js', () => {
 		.pipe(named())
 		.pipe(webpackStream({
 			config: settings.webpack
+		}).on('error', function () {
+			this.emit('end')
 		}))
-		.pipe(gulp.dest(paths.dest.js))
-		.pipe(gulpif(env === 'development', bs.stream()))
 		.pipe(plumber.stop())
+		.pipe(gulp.dest(paths.dest.js))
+		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
 
 // task: build:json
@@ -274,13 +314,7 @@ gulp.task('build:json', () => {
 	bs.notify('Running: build:json')
 	return gulp.src(paths.src.json)
 		.pipe(gulp.dest(paths.dest.json))
-		.pipe(gulpif(env === 'development', bs.stream()))
-})
-
-// task: reload:js
-gulp.task('reload:js', () => {
-	bs.notify('Running: reload:js')
-	return bs.reload()
+		.pipe(gulpif(env === 'development', bs.stream({ match: '**/*.html' })))
 })
 
 // task: clean:build
