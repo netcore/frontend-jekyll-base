@@ -5,7 +5,7 @@
 		}
 
 		.form-control {
-			@include placeholder {
+			&::placeholder {
 				color: $main-web-color;
 			}
 		}
@@ -46,7 +46,7 @@
 	}
 
 	&:hover {
-		@include placeholder {
+		&::placeholder {
 			color: $main-web-color;
 		}
 
