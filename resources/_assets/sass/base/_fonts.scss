@@ -18,9 +18,9 @@ $fonts: (
 	// 	'Roboto-BlackItalic' 900 italic
 	// ))
 
-	// 'Open Sans': ('open-sans', (
-	// 	'OpenSans-Light' 300 normal,
-	// 	'OpenSans-LightItalic' 300 italic,
+	'Open Sans': ('open-sans', (
+    //  'OpenSans-Light' 300 normal,
+    //  'OpenSans-LightItalic' 300 italic,
 	// 	'OpenSans-Regular' 400 normal,
 	// 	'OpenSans-Italic' 400 italic,
 	// 	'OpenSans-SemiBold' 600 normal,
@@ -29,7 +29,7 @@ $fonts: (
 	// 	'OpenSans-BoldItalic' 700 italic,
 	// 	'OpenSans-ExtraBold' 800 normal,
 	// 	'OpenSans-ExtraBoldItalic' 800 italic
-	// ))
+	))
 );
 
 // include font faces
@@ -38,11 +38,11 @@ $fonts: (
 	$locals: nth($src, 2);
 
 	@each $local in $locals {
-		$weight: nth($local, 2);
-		$style: nth($local, 3);
-		$local: nth($local, 1);
-		$path: $directory + '/' + $local;
+      $weight: nth($local, 2);
+      $style: nth($local, 3);
+      $local: nth($local, 1);
+      $path: $directory + '/' + $local;
 
-		@include font-face($name, $local, $path, $weight, $style);
+      @include font-face($name, $local, $path, $weight, $style);
 	}
 }

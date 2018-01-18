@@ -9,7 +9,6 @@
  │       ├── js/
  │           ├── classes/             # ES6 Classes
  │           ├── components/          # Any site component (e.g. Steps, Tabs, FileUpload etc.)
- │           ├── directives/          # Vue directives
  |           ├── app.js               # Our application's code
  |           ├── vendor.js            # Vendor libraries
  │       ├── json/                    # JSON for JS use
@@ -53,7 +52,7 @@ By doing it this way, webpack notices the sames libraries and puts them in a fil
 ### SVG
 * Usage
   * `{% include_relative _assets/svg/<icon name>.svg %}`
-  * 
+  * Use https://jakearchibald.github.io/svgomg/ website to remove unnecessary code from svg file
 
 ### SASS/SCSS
 #### Variables
@@ -70,7 +69,7 @@ By doing it this way, webpack notices the sames libraries and puts them in a fil
 * Technologies
   * use [ES2015](https://babeljs.io/learn-es2015/) (ES6) standards
 * File structure
-  * files must be logically split between 3 (or more) directories - `components/`, `classes/` and `directives/`
+  * files must be logically split between 2 (or more) directories - `components/` and `classes/`
   * if the name of file (theoretically) consists of two words, each of them must be capitalized (e.g. date picker -> DatePicker) - same applies to single-word files
 
 ### Fonts
@@ -94,6 +93,13 @@ By doing it this way, webpack notices the sames libraries and puts them in a fil
 #### Usage
 * open and update `resources/_assets/sass/base/_fonts.scss` to match your font files
 * directories/files with "\_" prefix are ignored
+
+### Validation
+ * validation works only if you add `.form-submit` class to your submit button
+ * for error messages, you will need to add `data-error` attribute to your `<input>`, `<select>`, `<textarea>` elements
+ * validation works only to elements with the `required` attribute
+ * attempting to submit, you will see `.has-error` classes applied to `.form-group` elements
+ * to see live example, go to styleguide page.
 
 ### Favicons
 * use [Real Favicon Generator](https://realfavicongenerator.net/) to generate favicons for web use

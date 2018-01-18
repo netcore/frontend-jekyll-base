@@ -1,0 +1,31 @@
+<h5>Form Example</h5>
+<hr>
+
+<div class="row">
+    <div class="col-4">
+        <form method="" action="">
+            <div class="form-group">
+                <input type="text" name="Name" class="form-control" data-error="Invalid name" placeholder="Name" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" data-error="Invalid e-mail" placeholder="E-mail" required>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group icon">
+                    <select class="form-control selectpicker" data-error="Invalid select value" title="Choose" required>
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+                    <span class="input-group-addon">
+                    {% include_relative _assets/svg/ic_search.svg %}
+                </span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default submit-form">Submit</button>
+        </form>
+    </div>
+</div>

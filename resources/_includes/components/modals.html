@@ -1,0 +1,39 @@
+<!-- header modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="signInModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sign in to your profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="">
+                <div class="modal-body">
+                    <!-- fields -->
+                    <div class="form-group">
+                        <label for="signin-email">Email address</label>
+                        <input type="email" name="email" class="form-control" id="signin-email" data-error="Nederīga e-pasta adrese" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signin-password">Password</label>
+                        <input type="password" name="password" class="form-control" id="signin-password" data-error="Passoword lauks ir obligāts" placeholder="Password" required>
+                    </div>
+                    <div class="form-check">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" name="remember" class="custom-control-input">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Remember me</span>
+                        </label>
+                    </div>
+                    <!-- END: fields -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary submit-form">Sign in</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- END: modal -->

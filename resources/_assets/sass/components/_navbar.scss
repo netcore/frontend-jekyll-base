@@ -1,0 +1,49 @@
+.navbar {
+	.navbar-toggler {
+		width: 32px;
+		height: 26px;
+		padding: 0;
+		border-radius: 0;
+		border: 0;
+		outline: 0;
+		cursor: pointer;
+
+		.line-1 {
+			transform: translateY(12px) rotate(45deg);
+		}
+
+		.line-2 {
+			opacity: 0;
+		}
+
+		.line-3 {
+			transform: translateY(-12px) rotate(-45deg);
+		}
+
+		&[aria-expanded="false"] {
+			.line-1, .line-3 {
+				transform: none;
+			}
+
+			.line-2 {
+				opacity: 1;
+			}
+		}
+
+		.line-1, .line-2, .line-3 {
+			width: 32px;
+			height: 2px;
+			background-color: #fff;
+			display: block;
+			transition-duration: .2s;
+		}
+
+		.line-2 {
+			margin-top: 10px;
+		}
+
+		.line-3 {
+			margin-top: 10px;
+		}
+	}
+}

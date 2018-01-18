@@ -21,22 +21,25 @@ const config = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
-            },
+                loader: 'babel-loader',
+				options: {
+					presets: ['env']
+				}
+            }/*,
             {
                 test: /\.vue$/,
                 exclude: /node_modules/,
                 loader: 'vue-loader'
             }
+            */
         ]
     },
     resolve: {
         alias: {
-            'vue$':         'vue/dist/vue',
+            //'vue$':         'vue/dist/vue',
 
             'components':   path.resolve(__dirname, 'resources/_assets/js/components'),
-            'classes':      path.resolve(__dirname, 'resources/_assets/js/classes'),
-            'directives':   path.resolve(__dirname, 'resources/_assets/js/directives')
+            'classes':      path.resolve(__dirname, 'resources/_assets/js/classes')
         }
     },
     devtool: 'source-map',
@@ -45,7 +48,7 @@ const config = {
             $: 'jquery/dist/jquery',
             jQuery: 'jquery/dist/jquery',
             'window.jQuery': 'jquery/dist/jquery',
-            Vue: 'vue',
+            //Vue: 'vue',
             Popper: ['popper.js', 'default'],
 
             // bootstrap

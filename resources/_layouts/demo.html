@@ -56,5 +56,11 @@
 
 	{{ content }}
 
+	<!-- scripts -->
+	<script src="{{ 'assets/js/common.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
+	<script src="{{ 'assets/js/vendor.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
+	<script src="{{ 'assets/js/app.bundle.js' | relative_url }}?_={{ site.time | date: '%s' }}"></script>
+	<!-- END: scripts -->
+
 </body>
 </html>

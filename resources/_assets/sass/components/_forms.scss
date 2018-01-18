@@ -1,0 +1,105 @@
+.form-group {
+	&.hover {
+		.input-group-addon svg {
+			opacity: 1;
+		}
+
+		.form-control {
+			@include placeholder {
+				color: $main-web-color;
+			}
+		}
+	}
+
+	&.focus {
+		.form-control {
+			border-color: $main-web-color;
+		}
+
+		.input-group-addon svg {
+			opacity: 1;
+		}
+	}
+
+	&.has-error {
+		.form-control {
+			border-color: red;
+		}
+
+		.form-text {
+			color: red;
+		}
+	}
+}
+
+.form-control {
+	box-shadow: none;
+	border-radius: 0;
+
+	&:focus {
+		box-shadow: none;
+		border-color: $main-web-color;
+
+		+ .input-group-addon svg {
+			opacity: 1;
+		}
+	}
+
+	&:hover {
+		@include placeholder {
+			color: $main-web-color;
+		}
+
+		+ .input-group-addon svg {
+			opacity: 1;
+		}
+	}
+}
+
+.input-group {
+	&.icon {
+		&-top {
+			.form-control {
+				padding-left: 40px;
+			}
+
+			.input-group-addon {
+				top: 11px;
+				transform: none;
+			}
+		}
+
+		.form-control {
+			padding-left: 40px;
+		}
+
+		.bootstrap-select .dropdown-toggle {
+			padding-left: 40px;
+		}
+	}
+
+	&-btn .btn {
+		margin: 0 !important;
+	}
+
+	&-addon {
+		background-color: transparent;
+		border: 0;
+		border-radius: 0;
+		position: absolute;
+		z-index: 4;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 14px;
+		padding: 0;
+		pointer-events: none;
+
+		svg {
+			opacity: 0.5;
+
+			path {
+				fill: $main-web-color;
+			}
+		}
+	}
+}

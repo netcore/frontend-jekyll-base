@@ -24,6 +24,7 @@ const webpackStream			= require('webpack-stream')
 const webpackUglify			= require('uglifyjs-webpack-plugin')
 const named					= require('vinyl-named')
 const BundleAnalyzerPlugin	= require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const cache 				= require('gulp-cache')
 
 // variables
 const jekyll				= process.platform === 'win32' ? 'jekyll.bat' : 'jekyll'
@@ -40,6 +41,7 @@ const paths = {
 			'resources/_assets/sass/**/*.{sass,scss}'
 		],
 		img: [
+			'resources/_assets/img/**/*.{jpg,jpeg,png,gif}',
 			'resources/_assets/img/*.{jpg,jpeg,png,gif}'
 		],
 		svg: [
@@ -65,7 +67,7 @@ const paths = {
 			'resources/_assets/json/*.json',
 			'resources/_assets/json/**/*.json'
 		],
-		jekyll: 'resources/**/*.html',
+		jekyll: 'resources/**/*.html'
 	},
 
 	// destination folders
@@ -193,7 +195,7 @@ gulp.task('build:jekyll', (callback) => {
 gulp.task('compile:sass', () => {
 	bs.notify('Running: compile:sass')
 	return gulp.src(paths.src.sass)
-		.pipe(plumber(settings.plumber('compile:sass')))
+		.pipe(cache(plumber(settings.plumber('compile:sass'))))
 		.pipe(gulpif(env === 'development', sourcemaps.init()))
 		.pipe(sass().on('error', function () {
 			this.emit('end')
@@ -211,7 +213,7 @@ gulp.task('compile:sass', () => {
 gulp.task('build:img', () => {
 	bs.notify('Running: build:img')
 	return gulp.src(paths.src.img)
-		.pipe(plumber(settings.plumber('build:img')))
+		.pipe(cache(plumber(settings.plumber('build:img'))))
 		.pipe(gulpif(env === 'production', imagemin(settings.imagemin)))
 		.pipe(plumber.stop())
 		.pipe(gulp.dest(paths.dest.img))
@@ -224,7 +226,7 @@ gulp.task('build:svg', () => {
 
 	// generate JSON file with SVG icon file names
 	gulp.src(paths.src.svg)
-		.pipe(plumber(settings.plumber('build:svg')))
+		.pipe(cache(plumber(settings.plumber('build:svg'))))
 		.pipe(concatFilenames('icons.json', settings.concatFilenames))
 		.pipe(header('[\n'))
 		.pipe(footer(']'))
@@ -233,7 +235,7 @@ gulp.task('build:svg', () => {
 
 	// relocate and optimize svg
 	return gulp.src(paths.src.svg)
-		.pipe(plumber(settings.plumber('build:svg')))
+		.pipe(cache(plumber(settings.plumber('build:svg'))))
 		.pipe(gulpif(env === 'production', svgmin()))
 		.pipe(plumber.stop())
 		.pipe(gulp.dest(paths.dest.svg))
@@ -244,7 +246,7 @@ gulp.task('build:svg', () => {
 gulp.task('build:favicon', () => {
 	bs.notify('Running: build:favicon')
 	return gulp.src(paths.src.favicon)
-		.pipe(plumber(settings.plumber('build:favicon')))
+		.pipe(cache(plumber(settings.plumber('build:favicon'))))
 		.pipe(gulpif(env === 'production', imagemin(settings.imagemin)))
 		.pipe(plumber.stop())
 		.pipe(gulp.dest(paths.dest.favicon))
@@ -297,7 +299,7 @@ gulp.task('build:js', () => {
 
 	bs.notify('Running: build:js')
 	return gulp.src(paths.src.js.main)
-		.pipe(plumber(settings.plumber('build:js')))
+		.pipe(cache(plumber(settings.plumber('build:js'))))
 		.pipe(named())
 		.pipe(webpackStream({
 			config: settings.webpack

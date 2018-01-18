@@ -3,6 +3,7 @@
 
 // vendors
 @import 'vendor/bootstrap';
+@import '../../../node_modules/bootstrap-select/sass/bootstrap-select';
 
 // base
 @import 'base/functions';
@@ -12,5 +13,13 @@
 
 // components
 @import 'components/noscript';
-// @import 'components/buttons';
-// ...
+@import 'components/navbar';
+@import 'components/forms';
+@import 'components/select';
+@import 'components/alerts';
+@import 'components/checkbox';
+@import 'components/tabs';
+@import 'components/pagination';
+
+// pages
+@import 'pages/styleguide';

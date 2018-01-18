@@ -63,9 +63,12 @@
     "webpack-stream": "^4.0.0"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "bootstrap": "4.0.0-beta.2",
+    "bootstrap-select": "^1.12.4",
+    "gulp-cache": "^1.0.2",
     "jquery": "^3.2.1",
-    "popper.js": "^1.12.6",
-    "vue": "^2.5.3"
+    "popper.js": "^1.12.6"
   }
 }

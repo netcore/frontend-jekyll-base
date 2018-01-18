@@ -1,0 +1,17 @@
+.alert {
+	display: flex;
+	align-items: center;
+
+	.close-alert {
+		margin-left: auto;
+		background-color: transparent;
+		border: 0;
+		outline: 0;
+		padding: 0;
+		cursor: pointer;
+
+		svg {
+			display: block;
+		}
+	}
+}

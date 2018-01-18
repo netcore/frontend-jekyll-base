@@ -1,4 +1,17 @@
 body {
 	padding-top: rem(56px);
 	overflow-y: scroll;
+
+    @include media-breakpoint-down(md) {
+        padding-top: rem(70px);
+    }
+
+    @include media-breakpoint-down(sm) {
+        padding-top: rem(56px);
+    }
+}
+
+.band {
+	background-color: $main-web-color;
+	padding: 20px 0;
 }

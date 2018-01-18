@@ -1,6 +1,7 @@
 // http://getbootstrap.com/docs/4.0/getting-started/theming/#variable-defaults
 
 // colors
+$main-web-color: #343a40;
 $body-bg: #fff;
 $body-color: #212529;
 $font-size-base: 1rem;
@@ -8,4 +9,12 @@ $font-size-base: 1rem;
 $theme-colors: (
 	"primary": #0074d9,
 	"danger": #ff4136
+);
+
+// container
+$container-max-widths: (
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1170px
 );
