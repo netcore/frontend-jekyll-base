@@ -1,10 +1,6 @@
 import jQuery from 'jquery'
 global.$ = global.jQuery = jQuery
 
-// add vue
-import 'vue'
-global.Vue = Vue
-
 // import bootstrap components
 import 'bootstrap/js/dist/util'
 import 'bootstrap/js/dist/alert'
