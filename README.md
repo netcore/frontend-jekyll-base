@@ -43,7 +43,7 @@ _this task may take longer to finish because of image processing tasks_
   * install bundler - `gem install bundler`
   * now when trying to run the commands again, add a prefix **bundle exec** (e.g. `bundle exec yarn` or `bundle exec gulp prod`)
 
-## For Frontend Developers
+## For Frontend Developers:
 
 ## Project Structure
 ```
