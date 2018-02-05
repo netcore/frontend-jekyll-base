@@ -42,6 +42,7 @@ _this task may take longer to finish because of image processing tasks_
 * _(might not work)_ If you are getting errors while trying to setup a project or run "gulp" tasks:
   * install bundler - `gem install bundler`
   * now when trying to run the commands again, add a prefix **bundle exec** (e.g. `bundle exec yarn` or `bundle exec gulp prod`)
+  * run `bundle clean --force` and then `bundle install`
 
 ## For Frontend Developers:
 
