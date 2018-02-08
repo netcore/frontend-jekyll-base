@@ -22,7 +22,7 @@ $(document).ready(function () {
 			appendError(input, form)
 		} else if (input.attr('type') == 'email' && !regexp.test(input.val())) {
 			appendError(input, form)
-		} else if (input.is('[type="checkbox"]') && !input.is(':checked')) {
+		} else if (input.is('[type="checkbox"][required]') && !input.is(':checked')) {
 			appendError(input, form)
 		}
 	}
@@ -55,13 +55,13 @@ $(document).ready(function () {
 
 		form.removeClass('success')
 
-		$.each(form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"]'), function (index, item) {
+		$.each(form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"][required]'), function (index, item) {
 			if (!$(item).val().length || $(item).is('[type="checkbox"]') && !$(item).is(':checked')) {
 				appendError($(item), form)
 			}
 		})
 
-		if (!form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"]').parents('.form-group, .form-check').hasClass('has-error')) {
+		if (!form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"][required]').parents('.form-group, .form-check').hasClass('has-error')) {
 			var formData = new FormData(form[0])
 
 			submitBtn.addClass('loading')
