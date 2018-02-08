@@ -1,3 +1,17 @@
+.form-check {
+	&.has-error {
+		.form-check-label {
+			input[type="checkbox"]:not(.toggle) ~ span:before {
+				border-color: red;
+			}
+		}
+
+		.form-text {
+			color: red;
+		}
+	}
+}
+
 .form-check-label {
 	padding: 0;
 	position: relative;

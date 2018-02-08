@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	function appendError(input, form) {
-		input.parents('.form-group')
+		input.parents('.form-group, .form-check')
 			.addClass('has-error')
 			.append('<small class="form-text">' + input.attr('data-error') + '</small>')
 
@@ -12,15 +12,17 @@ $(document).ready(function () {
 
 		form.removeClass('success')
 
-		input.parents('.form-group').removeClass('has-error').find('.form-text').remove()
+		input.parents('.form-group, .form-check').removeClass('has-error').find('.form-text').remove()
 
-		if (!form.find('.form-group').hasClass('has-error')) {
+		if (!form.find('.form-group, .form-check').hasClass('has-error')) {
 			form.find('.submit-form').prop('disabled', false)
 		}
 
 		if (!input.val()) {
 			appendError(input, form)
 		} else if (input.attr('type') == 'email' && !regexp.test(input.val())) {
+			appendError(input, form)
+		} else if (input.is('[type="checkbox"]') && !input.is(':checked')) {
 			appendError(input, form)
 		}
 	}
@@ -34,7 +36,7 @@ $(document).ready(function () {
 	$('form').find('input, textarea, select').on('keyup', function () {
 		var self = $(this)
 
-		if (self.parents('.form-group').hasClass('has-error')) {
+		if (self.parents('.form-group, .form-check').hasClass('has-error')) {
 			validateInput(self, self.parents('form'))
 		} else if (self.val().length) {
 			clearTimeout(timer)
@@ -53,13 +55,13 @@ $(document).ready(function () {
 
 		form.removeClass('success')
 
-		$.each(form.find('input, textarea, select').filter('[required]:visible'), function (index, item) {
-			if (!$(item).val().length) {
+		$.each(form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"]'), function (index, item) {
+			if (!$(item).val().length || $(item).is('[type="checkbox"]') && !$(item).is(':checked')) {
 				appendError($(item), form)
 			}
 		})
 
-		if (!form.find('input, textarea, select').filter('[required]:visible').parents('.form-group').hasClass('has-error')) {
+		if (!form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"]').parents('.form-group, .form-check').hasClass('has-error')) {
 			var formData = new FormData(form[0])
 
 			submitBtn.addClass('loading')
@@ -99,9 +101,9 @@ $(document).ready(function () {
 					var name = $(item).attr('name')
 
 					if (error.responseJSON.errors[name]) {
-						$(item).parents('.form-group').addClass('has-error')
+						$(item).parents('.form-group, .form-check').addClass('has-error')
 
-						$(item).parents('.form-group').append('<small class="form-text">' + error.responseJSON.errors[name][0] + '</small>')
+						$(item).parents('.form-group, .form-check').append('<small class="form-text">' + error.responseJSON.errors[name][0] + '</small>')
 					}
 				})
 			})
