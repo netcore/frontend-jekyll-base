@@ -1,0 +1,6 @@
+{
+  "message": "The given data was invalid.",
+  "errors": {
+    "name": ["Invalid name"]
+  }
+}

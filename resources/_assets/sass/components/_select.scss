@@ -1,3 +1,23 @@
+select.form-control {
+	background-color: transparent;
+	padding: 3px 15px 3px 15px;
+	border-radius: 0;
+	border: 0;
+	color: $main-web-color;
+	border: 1px solid #ced4da;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	height: auto !important;
+
+	&.selectpicker {
+		display: block !important;
+	}
+
+	&::-ms-expand {
+		display: none;
+	}
+}
+
 .bootstrap-select {
 	cursor: pointer;
 	padding: 0 !important;

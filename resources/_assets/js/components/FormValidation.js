@@ -7,31 +7,49 @@ $(document).ready(function () {
 		form.find('.submit-form').prop('disabled', true)
 	}
 
-	$('form').find('input, textarea, select').on('change keyup paste focusout', function () {
-		var form = $(this).parents('form')
+	function validateInput(input, form) {
 		var regexp = RegExp('^[a-zA-Z0-9+\\.+\\-\\_]+@([a-zA-Z0-9]+\\.)+[a-zA-Z]+$')
-		var self = $(this)
 
 		form.removeClass('success')
 
-		self.parents('.form-group').removeClass('has-error').find('.form-text').remove()
+		input.parents('.form-group').removeClass('has-error').find('.form-text').remove()
 
 		if (!form.find('.form-group').hasClass('has-error')) {
 			form.find('.submit-form').prop('disabled', false)
 		}
 
-		if (!self.val()) {
-			appendError(self, form)
-		} else if (self.attr('type') == 'email' && !regexp.test(self.val())) {
-			appendError(self, form)
+		if (!input.val()) {
+			appendError(input, form)
+		} else if (input.attr('type') == 'email' && !regexp.test(input.val())) {
+			appendError(input, form)
+		}
+	}
+
+	$('form').find('input, textarea, select').on('paste change focusout', function () {
+		validateInput($(this), $(this).parents('form'))
+	})
+
+	var timer
+
+	$('form').find('input, textarea, select').on('keyup', function () {
+		var self = $(this)
+
+		if (self.parents('.form-group').hasClass('has-error')) {
+			validateInput(self, self.parents('form'))
+		} else if (self.val().length) {
+			clearTimeout(timer)
+
+			timer = setTimeout(function () {
+				validateInput(self, self.parents('form'))
+			}, 500)
 		}
 	})
 
-	$('form .submit-form').on('click', function (event) {
+	$('form').on('submit', function (event) {
 		event.preventDefault()
 
-		var self = $(this)
-		var form = self.parents('form')
+		var submitBtn = $(this).find('.submit-form')
+		var form = $(this)
 
 		form.removeClass('success')
 
@@ -44,7 +62,9 @@ $(document).ready(function () {
 		if (!form.find('input, textarea, select').filter('[required]:visible').parents('.form-group').hasClass('has-error')) {
 			var formData = new FormData(form[0])
 
-			self.addClass('loading').append('<span class="loader"></span>')
+			submitBtn.addClass('loading')
+				.append('<span class="loader"></span>')
+				.prop('disabled', true)
 
 			$.ajax({
 				url: form.attr('action'),
@@ -53,17 +73,27 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false
 			}).done(function (xml, textStatus, xhr) {
-				self.removeClass('loading').find('.loader').remove()
 				form[0].reset()
+				$('.selectpicker').selectpicker('refresh')
+
+				submitBtn.removeClass('loading')
+					.prop('disabled', false)
+					.find('.loader')
+					.remove()
 
 				if (xhr.status == 200) {
 					form.addClass('success')
 				}
+
+				if (xml.redirect) {
+					setTimeout(function () {
+						window.location = xml.redirect
+					}, 500)
+				}
 			}).fail(function (error) {
-				self.removeClass('loading')
+				submitBtn.removeClass('loading')
 					.find('.loader')
 					.remove()
-					.prop('disabled', true)
 
 				$.each(form.find('input, textarea, select'), function (index, item) {
 					var name = $(item).attr('name')
@@ -71,7 +101,7 @@ $(document).ready(function () {
 					if (error.responseJSON.errors[name]) {
 						$(item).parents('.form-group').addClass('has-error')
 
-						$(item).parents('.form-group').append('<small class="form-text">' + error.responseJSON.errors[name[0]] + '</small>')
+						$(item).parents('.form-group').append('<small class="form-text">' + error.responseJSON.errors[name][0] + '</small>')
 					}
 				})
 			})

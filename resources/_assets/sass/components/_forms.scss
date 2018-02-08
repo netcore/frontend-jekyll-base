@@ -57,25 +57,15 @@
 }
 
 .input-group {
-	&.icon {
-		&-top {
-			.form-control {
-				padding-left: 40px;
-			}
-
-			.input-group-addon {
-				top: 11px;
-				transform: none;
-			}
+	&.icon-top {
+		.input-group-addon {
+			top: 11px;
+			transform: none;
 		}
+	}
 
-		.form-control {
-			padding-left: 40px;
-		}
-
-		.bootstrap-select .dropdown-toggle {
-			padding-left: 40px;
-		}
+	.form-control:not(:last-child), .bootstrap-select:not(:last-child) .dropdown-toggle {
+		padding-left: 40px;
 	}
 
 	&-btn .btn {
@@ -101,5 +91,15 @@
 				fill: $main-web-color;
 			}
 		}
+	}
+}
+
+form {
+	&.success .form-alert-success {
+		display: flex;
+	}
+
+	.form-alert-success {
+		display: none;
 	}
 }

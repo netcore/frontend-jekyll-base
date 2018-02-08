@@ -1,0 +1,15 @@
+.btn {
+	&.loading {
+		position: relative;
+		pointer-events: none;
+
+		> span:not(.loader) {
+			opacity: 0;
+			user-select: none;
+		}
+
+		.loader {
+			display: block;
+		}
+	}
+}
