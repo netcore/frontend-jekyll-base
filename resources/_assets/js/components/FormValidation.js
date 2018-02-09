@@ -86,7 +86,7 @@ $(document).ready(function () {
 				if (xhr.status == 200) {
 					form.addClass('success')
 
-					form.find('.form-alert-success > span').html(response.message)
+					form.find('.form-alert-success .response-message').html(response.message)
 				}
 
 				if (response.redirect) {
