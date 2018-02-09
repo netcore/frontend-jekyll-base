@@ -74,7 +74,7 @@ $(document).ready(function () {
 				data: formData,
 				processData: false,
 				contentType: false
-			}).done(function (xml, textStatus, xhr) {
+			}).done(function (response, textStatus, xhr) {
 				form[0].reset()
 				$('.selectpicker').selectpicker('refresh')
 
@@ -85,11 +85,13 @@ $(document).ready(function () {
 
 				if (xhr.status == 200) {
 					form.addClass('success')
+
+					form.find('.form-alert-success > span').html(response.message)
 				}
 
-				if (xml.redirect) {
+				if (response.redirect) {
 					setTimeout(function () {
-						window.location = xml.redirect
+						window.location = response.redirect
 					}, 500)
 				}
 			}).fail(function (error) {
