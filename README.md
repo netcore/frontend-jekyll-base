@@ -142,7 +142,7 @@ By doing it this way, webpack notices the sames libraries and puts them in a fil
 * directories/files with "\_" prefix are ignored
 
 ### Validation
- * validation works only if you add `.form-submit` class to your submit button
+ * validation works only if you add class `.form-submit` to your submit button and class `.validate` to your `<form>` element
  * for error messages, you will need to add `data-error` attribute to your `<input>`, `<select>`, `<textarea>` elements
  * validation works only to elements with the `required` attribute
  * attempting to submit, you will see `.has-error` classes applied to `.form-group` elements
