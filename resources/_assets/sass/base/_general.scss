@@ -1,11 +1,32 @@
-body {
-	padding-top: 70px;
-	overflow-y: scroll;
-}
-
+// index.html //
 .band {
 	background-color: $main-web-color;
 	padding: 20px 0;
+}
+
+.index-logo {
+    svg, img {
+        width: 100%;
+    }
+}
+
+.list-group {
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .last-update {
+            font-size: rem(12px);
+            font-weight: bold;
+        }
+    }
+}
+
+// global //
+body {
+	padding-top: 70px;
+	overflow-y: scroll;
 }
 
 .loader {
