@@ -1,0 +1,22 @@
+// Animation for form submit button
+@keyframes loaderAnimation {
+	0% {
+		left: 20%;
+	}
+	25% {
+		width: 4px;
+		height: 4px;
+	}
+	50% {
+		left: 70%;
+		height: 8px;
+		width: 8px;
+	}
+	75% {
+		width: 4px;
+		height: 4px;
+	}
+	100% {
+		left: 20%;
+	}
+}

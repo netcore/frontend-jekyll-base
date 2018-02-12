@@ -3,11 +3,12 @@ select.form-control {
 	padding: 6px 15px 6px 15px;
 	border-radius: 0;
 	border: 0;
-	color: $main-web-color;
+	color: $styleguide-color;
 	border: 1px solid #ced4da;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	height: auto !important;
+	position: relative;
 
 	&.selectpicker {
 		display: block !important;
@@ -19,7 +20,6 @@ select.form-control {
 }
 
 .bootstrap-select {
-	cursor: pointer;
 	padding: 0 !important;
 
 	&.form-control {
@@ -31,6 +31,7 @@ select.form-control {
 		padding: 3px 15px 3px 15px;
 		border-radius: 0;
 		border: 0;
+		cursor: pointer;
 
 		&:after {
 			content: none;
@@ -57,12 +58,12 @@ select.form-control {
 		}
 
 		.caret {
+			content: '';
 			display: inline-block;
 			width: 0;
 			height: 0;
 			margin-left: 0.255em;
 			vertical-align: 0.255em;
-			content: "";
 			border-top: 0.3em solid;
 			border-right: 0.3em solid transparent;
 			border-bottom: 0;

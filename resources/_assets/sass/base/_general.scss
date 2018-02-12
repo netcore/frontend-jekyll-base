@@ -1,6 +1,6 @@
 // index.html //
 .band {
-	background-color: $main-web-color;
+	background-color: $styleguide-color;
 	padding: 20px 0;
 }
 
@@ -29,37 +29,4 @@
 body {
 	padding-top: 70px;
 	overflow-y: scroll;
-}
-
-.loader {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	height: 8px;
-	width: 8px;
-	background: #fff;
-	border-radius: 100%;
-	animation: loaderAnimation 2s infinite;
-}
-
-@keyframes loaderAnimation {
-	0% {
-		left: 20%;
-	}
-	25% {
-		width: 4px;
-		height: 4px;
-	}
-	50% {
-		left: 70%;
-		height: 8px;
-		width: 8px;
-	}
-	75% {
-		width: 4px;
-		height: 4px;
-	}
-	100% {
-		left: 20%;
-	}
 }

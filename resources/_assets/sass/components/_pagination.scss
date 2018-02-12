@@ -12,8 +12,8 @@
 
 		&.active .page-link {
 			color: #fff;
-			background-color: $main-web-color;
-			border-color: $main-web-color;
+			background-color: $styleguide-color;
+			border-color: $styleguide-color;
 
 			&:hover, &:focus {
 				color: #fff;
@@ -27,11 +27,11 @@
 			padding: 9px 15px 9px 15px;
 
 			&:hover, &:focus {
-				color: $main-web-color;
+				color: $styleguide-color;
 
 				&.prev, &.next {
 					svg path {
-						fill: $main-web-color;
+						fill: $styleguide-color;
 					}
 				}
 			}

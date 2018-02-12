@@ -1,0 +1,11 @@
+// Form validation loader
+.loader {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	height: 8px;
+	width: 8px;
+	background: #fff;
+	border-radius: 100%;
+	animation: loaderAnimation 2s infinite;
+}

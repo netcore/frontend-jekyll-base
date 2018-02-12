@@ -24,8 +24,8 @@
 				font-weight: 600;
 
 				&:before {
-					border-color: $main-web-color;
-					background: $main-web-color url('../svg/ic_check.svg') no-repeat center center;
+					border-color: $styleguide-color;
+					background: $styleguide-color url('../svg/ic_check.svg') no-repeat center center;
 				}
 			}
 		}
@@ -35,8 +35,8 @@
 				font-weight: 600;
 
 				&:before {
-					border-color: $main-web-color;
-					background: $main-web-color url('../svg/ic_minus.svg') no-repeat center center;
+					border-color: $styleguide-color;
+					background: $styleguide-color url('../svg/ic_minus.svg') no-repeat center center;
 				}
 			}
 		}
@@ -87,8 +87,8 @@
 				font-weight: 600;
 
 				&:before {
-					border-color: $main-web-color;
-					box-shadow: 0 0 0 1px $main-web-color;
+					border-color: $styleguide-color;
+					box-shadow: 0 0 0 1px $styleguide-color;
 				}
 			}
 		}
@@ -140,8 +140,8 @@
 				font-weight: 600;
 
 				&:before {
-					background-color: $main-web-color;
-					border-color: $main-web-color;
+					background-color: $styleguide-color;
+					border-color: $styleguide-color;
 				}
 
 				&:after {
@@ -193,7 +193,7 @@
 				content: '';
 				height: 10px;
 				width: 10px;
-				background-color: $main-web-color;
+				background-color: $styleguide-color;
 				display: block;
 				position: absolute;
 				top: 7px;
