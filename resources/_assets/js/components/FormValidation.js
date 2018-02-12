@@ -30,7 +30,11 @@ $(document).ready(function () {
 	}
 
 	function scrollForm(position) {
-		$('html, body').animate({ 'scrollTop': position })
+		var windowTop = $(window).scrollTop()
+
+		if (windowTop > position) {
+			$('html, body').animate({ 'scrollTop': position })
+		}
 	}
 
 	function scrollToFirstError(form) {
@@ -107,6 +111,7 @@ $(document).ready(function () {
 
 					if ($successAlert.length) {
 						$successAlert.find('.response-message').html(response.message)
+
 						scrollForm($successAlert.offset().top - 10)
 					}
 				}
