@@ -12,19 +12,14 @@ layout: demo
                 <div class="list-group-item text-center">
                     Project logo here
                 </div>
-                <a href="{{ '/styleguide.html' | relative_url }}" class="list-group-item list-group-item-action">
-                    Styleguide
+                <div class="list-group-item">
                     <span class="last-update">
-                        Updated: {{ "now" | date: "%d.%m.%y at %H:%M" }}
+                        Updated: {{ "now" | date: "%-d %b, %Y at %H:%M" }}
                     </span>
-                </a>
+                </div>
+                <a href="{{ '/styleguide.html' | relative_url }}" class="list-group-item list-group-item-action">Styleguide</a>
                 <div class="list-group-item list-group-item-action disabled bg-light py-1">Pages</div>
-                <a href="{{ '/landing.html' | relative_url }}" class="list-group-item list-group-item-action">
-                    Landing page
-                    <span class="last-update">
-                        Updated: {{ "now" | date: "%d.%m.%y at %H:%M" }}
-                    </span>
-                </a>
+                <a href="{{ '/landing.html' | relative_url }}" class="list-group-item list-group-item-action">Landing page</a>
                 <!-- ... -->
             </div>
         </div>
