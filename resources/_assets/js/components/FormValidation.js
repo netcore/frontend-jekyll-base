@@ -18,36 +18,54 @@ $(document).ready(function () {
 			form.find('.submit-form').prop('disabled', false)
 		}
 
-		if (!input.val()) {
-			appendError(input, form)
-		} else if (input.attr('type') == 'email' && !regexp.test(input.val())) {
-			appendError(input, form)
-		} else if (input.is('[type="checkbox"][required]') && !input.is(':checked')) {
-			appendError(input, form)
+		if (input.is('[required]')) {
+			if (!input.val()) {
+				appendError(input, form)
+			} else if (input.attr('type') == 'email' && !regexp.test(input.val())) {
+				appendError(input, form)
+			} else if (input.is('[type="checkbox"][required]') && !input.is(':checked')) {
+				appendError(input, form)
+			}
 		}
 	}
 
-	$('form').find('input, textarea, select').on('paste change focusout', function () {
-		validateInput($(this), $(this).parents('form'))
-	})
+	function scrollForm(position) {
+		$('html, body').animate({ 'scrollTop': position })
+	}
 
-	var timer
+	function scrollToFirstError(form) {
+		var $errorField = form.find('.has-error')
 
-	$('form').find('input, textarea, select').on('keyup', function () {
+		if ($errorField.length) {
+			var errorTop = $errorField.first().offset().top - 10
+
+			scrollForm(errorTop)
+		}
+	}
+
+	$('form.validate').find('input, textarea, select').on('focusout', function () {
 		var self = $(this)
 
-		if (self.parents('.form-group, .form-check').hasClass('has-error')) {
+		if (self.val().length) {
 			validateInput(self, self.parents('form'))
-		} else if (self.val().length) {
-			clearTimeout(timer)
-
-			timer = setTimeout(function () {
-				validateInput(self, self.parents('form'))
-			}, 500)
 		}
 	})
 
-	$('form').on('submit', function (event) {
+	$('form.validate').find('input, textarea, select').on('change', function () {
+		var self = $(this)
+
+		validateInput(self, self.parents('form'))
+	})
+
+	$('form.validate').find('input, textarea, select').on('keyup', function () {
+		var self = $(this)
+
+		if (self.parents('.form-group').hasClass('has-error')) {
+			validateInput(self, self.parents('form'))
+		}
+	})
+
+	$('form.validate').on('submit', function (event) {
 		event.preventDefault()
 
 		var submitBtn = $(this).find('.submit-form')
@@ -60,6 +78,8 @@ $(document).ready(function () {
 				appendError($(item), form)
 			}
 		})
+
+		scrollToFirstError(form)
 
 		if (!form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"][required]').parents('.form-group, .form-check').hasClass('has-error')) {
 			var formData = new FormData(form[0])
@@ -75,9 +95,6 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false
 			}).done(function (response, textStatus, xhr) {
-				form[0].reset()
-				$('.selectpicker').selectpicker('refresh')
-
 				submitBtn.removeClass('loading')
 					.prop('disabled', false)
 					.find('.loader')
@@ -86,13 +103,23 @@ $(document).ready(function () {
 				if (xhr.status == 200) {
 					form.addClass('success')
 
-					form.find('.form-alert-success .response-message').html(response.message)
+					var $successAlert = form.find('.form-alert-success')
+
+					if ($successAlert.length) {
+						$successAlert.find('.response-message').html(response.message)
+						scrollForm($successAlert.offset().top - 10)
+					}
 				}
 
 				if (response.redirect) {
+					submitBtn.prop('disabled', true)
+
 					setTimeout(function () {
 						window.location = response.redirect
-					}, 500)
+					}, 1000)
+				} else {
+					form[0].reset()
+					$('.selectpicker').selectpicker('refresh')
 				}
 			}).fail(function (error) {
 				submitBtn.removeClass('loading')
@@ -108,6 +135,8 @@ $(document).ready(function () {
 						$(item).parents('.form-group, .form-check').append('<small class="form-text">' + error.responseJSON.errors[name][0] + '</small>')
 					}
 				})
+
+				scrollToFirstError(form)
 			})
 		}
 	})
