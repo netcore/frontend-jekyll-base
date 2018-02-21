@@ -13,7 +13,7 @@
             </div>
 
             <div class="form-group">
-                <input type="email" name="email" class="form-control" data-error="Invalid e-mail" placeholder="E-mail" required>
+                <input type="email" name="email" class="form-control" data-error='{"required": "Please enter a e-mail address", "invalid": "Invalid e-mail address"}' placeholder="E-mail" required>
             </div>
 
             <div class="form-group">
@@ -27,6 +27,14 @@
                         {% include_relative _assets/svg/ic_search.svg %}
                     </span>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" data-error='{"required": "Please enter a password", "password_match": "Password does not match"}' placeholder="Password">
+            </div>
+
+            <div class="form-group">
+                <input type="password" name="password_confirmation" class="form-control" data-error='{"required": "Please enter a password", "password_match": "Password does not match"}' placeholder="Password again">
             </div>
 
             <div class="form-check">

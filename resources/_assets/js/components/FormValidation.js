@@ -1,94 +1,144 @@
 $(document).ready(function () {
-	function appendError(input, form) {
-		input.parents('.form-group, .form-check')
-			.addClass('has-error')
-			.append('<small class="form-text">' + input.attr('data-error') + '</small>')
+	// display error
+	function appendError(input, form, object) {
+		let error
 
-		form.find('.submit-form').prop('disabled', true)
+		try {
+			if (typeof JSON.parse(input.attr('data-error')) === 'object') {
+				error = JSON.parse(input.attr('data-error'))[object]
+			}
+		} catch(e) {
+			error = input.attr('data-error')
+		}
+
+		input
+			.parents('.form-group, .form-check')
+			.addClass('has-error')
+			.append('<small class="form-text">' + error + '</small>')
+
+		form
+			.addClass('has-errors')
+			.find('.submit-form')
+			.prop('disabled', true)
 	}
 
+	// input validation
 	function validateInput(input, form) {
-		var regexp = RegExp('^[a-zA-Z0-9+\\.+\\-\\_]+@([a-zA-Z0-9]+\\.)+[a-zA-Z]+$')
+		let regexp = RegExp('^[a-zA-Z0-9+\\.+\\-\\_]+@([a-zA-Z0-9]+\\.)+[a-zA-Z]+$')
+
+		input
+			.parents('.form-group, .form-check')
+			.removeClass('has-error')
+			.find('.form-text')
+			.remove()
 
 		form.removeClass('success')
 
-		input.parents('.form-group, .form-check').removeClass('has-error').find('.form-text').remove()
-
 		if (!form.find('.form-group, .form-check').hasClass('has-error')) {
-			form.find('.submit-form').prop('disabled', false)
+			form
+				.removeClass('has-errors')
+				.find('.submit-form')
+				.prop('disabled', false)
 		}
 
 		if (input.is('[required]')) {
-			if (!input.val()) {
-				appendError(input, form)
-			} else if (input.attr('type') == 'email' && !regexp.test(input.val())) {
-				appendError(input, form)
-			} else if (input.is('[type="checkbox"][required]') && !input.is(':checked')) {
-				appendError(input, form)
+			switch(input.attr('type')) {
+				case 'email':
+					if (!input.val()) {
+						appendError(input, form, 'required')
+					} else if (!regexp.test(input.val())) {
+						appendError(input, form, 'invalid')
+					}
+
+					break
+				case 'checkbox':
+					if (!input.is(':checked')) {
+						appendError(input, form)
+					}
+
+					break
+				default:
+					if (!input.val()) {
+						appendError(input, form, 'required')
+					}
 			}
 		}
 	}
 
+	// scroll to form top
 	function scrollForm(position) {
-		var windowTop = $(window).scrollTop()
+		let windowTop = $(window).scrollTop()
 
 		if (windowTop > position) {
 			$('html, body').animate({ 'scrollTop': position })
 		}
 	}
 
+	// scroll to error
 	function scrollToFirstError(form) {
-		var $errorField = form.find('.has-error')
+		let $errorField = form.find('.has-error')
 
 		if ($errorField.length) {
-			var errorTop = $errorField.first().offset().top - 10
+			let errorTop = $errorField.first().offset().top - 10
 
 			scrollForm(errorTop)
 		}
 	}
 
+	// validate input on focus out
 	$('form.validate').find('input, textarea, select').on('focusout', function () {
-		var self = $(this)
+		let self = $(this)
 
 		if (self.val().length) {
 			validateInput(self, self.parents('form'))
 		}
 	})
 
+	// validate input on change
 	$('form.validate').find('input, textarea, select').on('change', function () {
-		var self = $(this)
+		let self = $(this)
 
 		validateInput(self, self.parents('form'))
 	})
 
+	// validate input on keyup
 	$('form.validate').find('input, textarea, select').on('keyup', function () {
-		var self = $(this)
+		let self = $(this)
 
 		if (self.parents('.form-group').hasClass('has-error')) {
 			validateInput(self, self.parents('form'))
 		}
 	})
 
+	// submit form
 	$('form.validate').on('submit', function (event) {
 		event.preventDefault()
 
-		var submitBtn = $(this).find('.submit-form')
-		var form = $(this)
+		let submitBtn = $(this).find('.submit-form')
+		let form = $(this)
 
-		form.removeClass('success')
-
-		$.each(form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"][required]'), function (index, item) {
-			if (!$(item).val().length || $(item).is('[type="checkbox"]') && !$(item).is(':checked')) {
-				appendError($(item), form)
-			}
+		// go through all elements and validate
+		$.each(form.find('input, textarea, select'), function (index, item) {
+			validateInput($(item), form)
 		})
+
+		// check if both passwords match
+		let passwordOne = form.find('input').filter('[name="password"]')
+		let passwordTwo = form.find('input').filter('[name="password_confirmation"]')
+
+		if (passwordOne.length && passwordTwo.length && passwordOne.val().length && passwordTwo.val().length) {
+			if (passwordOne.val() != passwordTwo.val()) {
+				appendError(passwordOne, form, 'password_match')
+			}
+		}
 
 		scrollToFirstError(form)
 
-		if (!form.find('input, textarea, select').filter('[required]:visible, [type="checkbox"][required]').parents('.form-group, .form-check').hasClass('has-error')) {
-			var formData = new FormData(form[0])
+		if (!form.hasClass('has-errors')) {
+			let formData = new FormData(form[0])
 
-			submitBtn.addClass('loading')
+			submitBtn
+				.addClass('loading')
 				.append('<span class="loader"></span>')
 				.prop('disabled', true)
 
@@ -99,7 +149,8 @@ $(document).ready(function () {
 				processData: false,
 				contentType: false
 			}).done(function (response, textStatus, xhr) {
-				submitBtn.removeClass('loading')
+				submitBtn
+					.removeClass('loading')
 					.prop('disabled', false)
 					.find('.loader')
 					.remove()
@@ -107,7 +158,7 @@ $(document).ready(function () {
 				if (xhr.status == 200) {
 					form.addClass('success')
 
-					var $successAlert = form.find('.form-alert-success')
+					let $successAlert = form.find('.form-alert-success')
 
 					if ($successAlert.length) {
 						$successAlert.find('.response-message').html(response.message)
@@ -127,12 +178,13 @@ $(document).ready(function () {
 					$('.selectpicker').selectpicker('refresh')
 				}
 			}).fail(function (error) {
-				submitBtn.removeClass('loading')
+				submitBtn
+					.removeClass('loading')
 					.find('.loader')
 					.remove()
 
 				$.each(form.find('input, textarea, select'), function (index, item) {
-					var name = $(item).attr('name')
+					let name = $(item).attr('name')
 
 					if (error.responseJSON.errors[name]) {
 						$(item).parents('.form-group, .form-check').addClass('has-error')
