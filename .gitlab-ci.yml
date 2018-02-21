@@ -29,7 +29,10 @@ compile-project:
     - docker-runner
   script:
     - echo "compile assets and jekyll"
-    - apk update && apk add -u zip
+    - apk update && apk add -u zip tzdata
+    - cp /usr/share/zoneinfo/Europe/Riga /etc/localtime
+    - echo "Europe/Riga" >  /etc/timezone
+    - date
     - echo "" >> _config.yml
     - 'echo "baseurl: /$CI_PROJECT_NAME" >> _config.yml'
     - 'echo "url: http://html.netcore.lv" >> _config.yml'

@@ -17,6 +17,7 @@ navigation:
   url: /another.html
 
 # Build settings
+timezone: Europe/Riga
 markdown: kramdown
 theme: minima
 exclude:
