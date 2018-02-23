@@ -76,6 +76,7 @@ const paths = {
 		css: '_site/assets/css',
 		img: '_site/assets/img',
 		svg: '_site/assets/svg',
+		svgDev: 'resources/_assets/svg',
 		favicon: '_site/assets/favicon',
 		fonts: '_site/assets/fonts',
 		js: '_site/assets/js',
@@ -233,7 +234,7 @@ gulp.task('build:svg', () => {
 
 	// generate JSON file with SVG icon file names
 	gulp.src(paths.src.svg)
-		.pipe(cache(plumber(settings.plumber('build:svg'))))
+		.pipe(plumber(settings.plumber('build:svg')))
 		.pipe(concatFilenames('icons.json', settings.concatFilenames))
 		.pipe(header('[\n'))
 		.pipe(footer(']'))
@@ -242,11 +243,22 @@ gulp.task('build:svg', () => {
 
 	// relocate and optimize svg
 	return gulp.src(paths.src.svg)
-		.pipe(cache(plumber(settings.plumber('build:svg'))))
-		.pipe(gulpif(env === 'production', svgmin()))
+		.pipe(plumber(settings.plumber('build:svg')))
+		.pipe(svgmin(file => {
+			const prefix = path.basename(file.relative, path.extname(file.relative))
+            return {
+                plugins: [{
+                    cleanupIDs: {
+                        prefix: prefix + '-',
+						minify: true
+                    }
+                }]
+            }
+		}))
 		.pipe(plumber.stop())
+		.pipe(gulp.dest(paths.dest.svgDev))
 		.pipe(gulp.dest(paths.dest.svg))
-		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
+		.pipe(gulpif(env === 'development', bs.stream()))
 })
 
 // task: build:favicon
@@ -269,14 +281,14 @@ gulp.task('build:fonts', () => {
 })
 
 // task: build:video
-/*
-gulp.task('build:video', () => {
+/*gulp.task('build:video', () => {
 	bs.notify('Running: build:video')
 	return gulp.src(paths.src.video)
 		.pipe(gulp.dest(paths.dest.video))
 		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
 */
+
 // task: build:js
 gulp.task('build:js', () => {
 	// define the environment for vendor plugins to compile in
@@ -351,7 +363,7 @@ gulp.task('clean:build', () => {
 
 // task: default
 gulp.task('default', ['clean:build'], () => {
-	return gulp.start('compile:sass', 'build:img', 'minify:img', 'build:svg', 'build:favicon', 'build:fonts', 'build:js', 'build:json', 'build:jekyll', /*'build:video'*/)
+	return gulp.start('compile:sass', 'build:img', 'minify:img', 'build:svg', 'build:favicon', 'build:fonts', 'build:js', 'build:json', 'build:jekyll'/*, 'build:video'*/)
 })
 
 // task: production
