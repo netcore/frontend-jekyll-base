@@ -98,7 +98,9 @@ $(document).ready(function () {
 	$('form.validate').find('input, textarea, select').on('change', function () {
 		let self = $(this)
 
-		validateInput(self, self.parents('form'))
+		if (self.val().length) {
+			validateInput(self, self.parents('form'))
+		}
 	})
 
 	// validate input on keyup
@@ -187,9 +189,10 @@ $(document).ready(function () {
 					let name = $(item).attr('name')
 
 					if (error.responseJSON.errors[name]) {
-						$(item).parents('.form-group, .form-check').addClass('has-error')
-
-						$(item).parents('.form-group, .form-check').append('<small class="form-text">' + error.responseJSON.errors[name][0] + '</small>')
+						$(item)
+							.parents('.form-group')
+							.addClass('has-error')
+							.append('<small class="form-text">' + error.responseJSON.errors[name][0] + '</small>')
 					}
 				})
 
