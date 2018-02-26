@@ -44,6 +44,10 @@ const paths = {
 			'resources/_assets/img/**/*.{jpg,jpeg,png,gif}',
 			'resources/_assets/img/*.{jpg,jpeg,png,gif}'
 		],
+		imgMin: [
+			'resources/_assets/img/**/*.{png,gif}',
+			'resources/_assets/img/*.{png,gif}'
+		],
 		svg: [
 			'resources/_assets/svg/*.svg',
 			'resources/_assets/svg/**/*.svg',
@@ -51,11 +55,7 @@ const paths = {
 			'!resources/_assets/svg/**/_*.svg'
 		],
 		favicon: 'resources/_assets/favicon/*.{ico,png,json,svg,xml}',
-		fonts: [
-			'!resources/_assets/fonts/{_**,_**/*}',
-			'!resources/_assets/fonts/**/_*',
-			'resources/_assets/fonts/**/*.{ttf,otf,eot,woff,woff2,svg}'
-		],
+		fonts: 'resources/_assets/fonts/**/*.{ttf,otf,eot,woff,woff2,svg}',
 		js: {
 			main: 'resources/_assets/js/*.js',
 			all: [
@@ -67,6 +67,7 @@ const paths = {
 			'resources/_assets/json/*.json',
 			'resources/_assets/json/**/*.json'
 		],
+		//video: 'resources/_assets/video/*.{mp4,ogg,webm}',
 		jekyll: 'resources/**/*.html'
 	},
 
@@ -75,10 +76,12 @@ const paths = {
 		css: '_site/assets/css',
 		img: '_site/assets/img',
 		svg: '_site/assets/svg',
+		svgDev: 'resources/_assets/svg',
 		favicon: '_site/assets/favicon',
 		fonts: '_site/assets/fonts',
 		js: '_site/assets/js',
-		json: '_site/assets/json'
+		json: '_site/assets/json',
+		//video: '_site/assets/video'
 	}
 }
 
@@ -87,9 +90,6 @@ const settings = {
 	imagemin: [
 		imagemin.gifsicle({
 			interlaced: true
-		}),
-		imagemin.jpegtran({
-			progressive: true
 		}),
 		imageminPngquant({
 			speed: 1,
@@ -214,11 +214,19 @@ gulp.task('build:img', () => {
 	bs.notify('Running: build:img')
 	return gulp.src(paths.src.img)
 		.pipe(cache(plumber(settings.plumber('build:img'))))
-		.pipe(gulpif(env === 'production', imagemin(settings.imagemin)))
 		.pipe(plumber.stop())
 		.pipe(gulp.dest(paths.dest.img))
 		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
+
+gulp.task('minify:img', () => {
+	bs.notify('Running: minify:img')
+	return gulp.src(paths.src.imgMin)
+	.pipe(cache(plumber(settings.plumber('minify:img'))))
+	.pipe(gulpif(env === 'production', imagemin(settings.imagemin)))
+	.pipe(plumber.stop())
+	.pipe(gulp.dest(paths.dest.img))
+})	
 
 // task: build:svg
 gulp.task('build:svg', () => {
@@ -226,7 +234,7 @@ gulp.task('build:svg', () => {
 
 	// generate JSON file with SVG icon file names
 	gulp.src(paths.src.svg)
-		.pipe(cache(plumber(settings.plumber('build:svg'))))
+		.pipe(plumber(settings.plumber('build:svg')))
 		.pipe(concatFilenames('icons.json', settings.concatFilenames))
 		.pipe(header('[\n'))
 		.pipe(footer(']'))
@@ -235,11 +243,22 @@ gulp.task('build:svg', () => {
 
 	// relocate and optimize svg
 	return gulp.src(paths.src.svg)
-		.pipe(cache(plumber(settings.plumber('build:svg'))))
-		.pipe(gulpif(env === 'production', svgmin()))
+		.pipe(plumber(settings.plumber('build:svg')))
+		.pipe(svgmin(file => {
+			const prefix = path.basename(file.relative, path.extname(file.relative))
+            return {
+                plugins: [{
+                    cleanupIDs: {
+                        prefix: prefix + '-',
+						minify: true
+                    }
+                }]
+            }
+		}))
 		.pipe(plumber.stop())
+		.pipe(gulp.dest(paths.dest.svgDev))
 		.pipe(gulp.dest(paths.dest.svg))
-		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
+		.pipe(gulpif(env === 'development', bs.stream()))
 })
 
 // task: build:favicon
@@ -260,6 +279,15 @@ gulp.task('build:fonts', () => {
 		.pipe(gulp.dest(paths.dest.fonts))
 		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
 })
+
+// task: build:video
+/*gulp.task('build:video', () => {
+	bs.notify('Running: build:video')
+	return gulp.src(paths.src.video)
+		.pipe(gulp.dest(paths.dest.video))
+		.pipe(gulpif(env === 'development', bs.stream({ once: true })))
+})
+*/
 
 // task: build:js
 gulp.task('build:js', () => {
@@ -335,7 +363,7 @@ gulp.task('clean:build', () => {
 
 // task: default
 gulp.task('default', ['clean:build'], () => {
-	return gulp.start('compile:sass', 'build:img', 'build:svg', 'build:favicon', 'build:fonts', 'build:js', 'build:json', 'build:jekyll')
+	return gulp.start('compile:sass', 'build:img', 'minify:img', 'build:svg', 'build:favicon', 'build:fonts', 'build:js', 'build:json', 'build:jekyll'/*, 'build:video'*/)
 })
 
 // task: production
@@ -363,4 +391,5 @@ gulp.task('watch', ['default'], () => {
 	gulp.watch(paths.src.jekyll, ['build:jekyll'])
 	gulp.watch(paths.src.js.all, ['build:js'])
 	gulp.watch(paths.src.json, ['build:json'])
+	//gulp.watch(paths.src.video, ['build:video'])
 })
