@@ -197,7 +197,7 @@ gulp.task('compile:sass', () => {
 	return gulp.src(paths.src.sass)
 		.pipe(cache(plumber(settings.plumber('compile:sass'))))
 		.pipe(gulpif(env === 'development', sourcemaps.init()))
-		.pipe(sass().on('error', function () {
+		.pipe(sass().on('error', sass.logError, function () {
 			this.emit('end')
 		}))
 		.pipe(autoprefixer())
